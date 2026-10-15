@@ -1,0 +1,6 @@
+AirGlass native engine 2.5
+UxPlay v1.72 commit 7fc5f4d9b969dbb703ca59eb47697ff51b8cb7a5
+Generic x64 Release, NO_MARCH_NATIVE=ON. GStreamer SDK 1.28.8; runtime 1.26.2.
+AirGlass.exe SHA256: 8f970983ba45f15810bab560babad68a3703c2adb4d1f07c821ac4548a3af210
+engine/bin/uxplay.exe SHA256: 150c9c8bbc7a808384f27de4b9718b02bbb49f28afd1d56f94a0791c8b0cac84
+source/AirGlassEngine-source.zip SHA256: 4a31121ffbd797d4b5663045dc1b4b9f1692161bfc9c4fae2adbb5587ccf9e76

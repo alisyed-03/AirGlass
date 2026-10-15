@@ -1,0 +1,100 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ Title="AirGlass • iPhone screen receiver" Width="1100" Height="870" MinWidth="980" MinHeight="720" WindowStartupLocation="CenterScreen"
+ Background="#0C111B" Foreground="#EDF3FB" FontFamily="Segoe UI" FontSize="14">
+ <Window.Resources>
+  <SolidColorBrush x:Key="Muted" Color="#94A3B8"/>
+  <Style TargetType="Button">
+   <Setter Property="Foreground" Value="#EDF3FB"/><Setter Property="Background" Value="#243044"/><Setter Property="Cursor" Value="Hand"/>
+   <Setter Property="Padding" Value="18,11"/><Setter Property="BorderThickness" Value="0"/><Setter Property="FontWeight" Value="SemiBold"/>
+   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button"><Border x:Name="Box" Background="{TemplateBinding Background}" CornerRadius="9" Padding="{TemplateBinding Padding}"><ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/></Border><ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Box" Property="Opacity" Value="0.8"/></Trigger><Trigger Property="IsEnabled" Value="False"><Setter TargetName="Box" Property="Opacity" Value="0.4"/></Trigger><Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Box" Property="BorderBrush" Value="#70E4CA"/><Setter TargetName="Box" Property="BorderThickness" Value="2"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
+  </Style>
+  <Style TargetType="TextBox"><Setter Property="Background" Value="#0F1725"/><Setter Property="Foreground" Value="#EDF3FB"/><Setter Property="BorderBrush" Value="#334155"/><Setter Property="Padding" Value="12,10"/><Setter Property="CaretBrush" Value="#70E4CA"/></Style>
+  <Style TargetType="ComboBoxItem"><Setter Property="Foreground" Value="#EDF3FB"/><Setter Property="Background" Value="#172438"/><Setter Property="Padding" Value="12,9"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ComboBoxItem"><Border x:Name="Item" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"><ContentPresenter/></Border><ControlTemplate.Triggers><Trigger Property="IsHighlighted" Value="True"><Setter TargetName="Item" Property="Background" Value="#2B4156"/></Trigger><Trigger Property="IsSelected" Value="True"><Setter TargetName="Item" Property="Background" Value="#24564F"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter></Style>
+  <Style TargetType="ComboBox">
+   <Setter Property="Height" Value="40"/><Setter Property="FontSize" Value="14"/><Setter Property="Foreground" Value="#EDF3FB"/>
+   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ComboBox"><Grid>
+    <ToggleButton Focusable="False" IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"><ToggleButton.Template><ControlTemplate TargetType="ToggleButton"><Border Background="#0F1725" BorderBrush="#334155" BorderThickness="1" CornerRadius="7"><TextBlock Text="⌄" Foreground="#94A3B8" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,12,4" FontSize="18"/></Border></ControlTemplate></ToggleButton.Template></ToggleButton>
+    <ContentPresenter IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" Margin="12,0,30,0" VerticalAlignment="Center"/>
+    <Popup x:Name="PART_Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Fade"><Border Background="#172438" BorderBrush="#334155" BorderThickness="1" MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" CornerRadius="7" Padding="3"><ScrollViewer MaxHeight="320"><StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/></ScrollViewer></Border></Popup>
+   </Grid><ControlTemplate.Triggers><Trigger Property="IsKeyboardFocusWithin" Value="True"><Setter Property="BorderBrush" Value="#70E4CA"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
+  </Style>
+  <Style TargetType="CheckBox"><Setter Property="Foreground" Value="#CCD8E7"/><Setter Property="Margin" Value="0,6,0,0"/></Style>
+  <Style TargetType="ScrollBar"><Setter Property="Width" Value="8"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ScrollBar"><Track x:Name="PART_Track" IsDirectionReversed="True"><Track.DecreaseRepeatButton><RepeatButton Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="False"/></Track.DecreaseRepeatButton><Track.Thumb><Thumb><Thumb.Template><ControlTemplate TargetType="Thumb"><Border Background="#35465C" CornerRadius="4" Margin="2,0"/></ControlTemplate></Thumb.Template></Thumb></Track.Thumb><Track.IncreaseRepeatButton><RepeatButton Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="False"/></Track.IncreaseRepeatButton></Track></ControlTemplate></Setter.Value></Setter></Style>
+ </Window.Resources>
+ <Grid Margin="30,24">
+  <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+  <Grid Margin="0,0,0,24">
+   <StackPanel Orientation="Horizontal">
+    <Image x:Name="LogoImage" Width="48" Height="48"/>
+    <StackPanel Margin="14,0,0,0"><TextBlock Text="AirGlass" FontSize="25" FontWeight="SemiBold"/><TextBlock Text="Your iPhone, on a bigger screen." Foreground="{StaticResource Muted}" FontSize="13"/></StackPanel>
+   </StackPanel>
+   <Border HorizontalAlignment="Right" VerticalAlignment="Center" Background="#192336" CornerRadius="15" Padding="14,7"><StackPanel Orientation="Horizontal"><Ellipse x:Name="StatusDot" Fill="#94A3B8" Width="8" Height="8" Margin="0,0,8,0"/><TextBlock x:Name="StatusBadge" Text="Receiver off" FontSize="12"/></StackPanel></Border>
+  </Grid>
+  <Grid Grid.Row="1">
+   <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="320"/></Grid.ColumnDefinitions>
+   <Grid Margin="0,0,22,0">
+    <Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+    <Border Background="#121D2B" BorderBrush="#263347" BorderThickness="1" CornerRadius="16" Padding="24">
+     <Grid>
+      <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+      <Grid><TextBlock Text="SCREEN MIRRORING" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource Muted}"/><TextBlock x:Name="ProfileSummary" Text="1080p / 30 fps" HorizontalAlignment="Right" FontSize="12" Foreground="#70E4CA"/></Grid>
+      <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+       <Grid Width="215" Height="126" Margin="0,0,0,24">
+        <Border Width="181" Height="104" HorizontalAlignment="Left" BorderBrush="#425674" BorderThickness="3" CornerRadius="9" Background="#0D1522"><TextBlock Text="▣" Foreground="#70E4CA" FontSize="39" HorizontalAlignment="Center" VerticalAlignment="Center"/></Border>
+        <Border Width="51" Height="91" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderBrush="#70E4CA" BorderThickness="3" CornerRadius="10" Background="#172738"><Border Width="20" Height="4" Background="#70E4CA" CornerRadius="2" VerticalAlignment="Top" Margin="0,5,0,0"/></Border>
+       </Grid>
+       <TextBlock x:Name="HeroTitle" Text="Make room for your screen." FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+       <TextBlock x:Name="HeroHint" Text="The receiver starts automatically when you open AirGlass." Foreground="{StaticResource Muted}" Margin="0,10,0,0" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="450"/>
+       <Border Background="#192B39" CornerRadius="8" Padding="18,10" Margin="0,20,0,0" HorizontalAlignment="Center"><TextBlock x:Name="ReceiverLabel" Text="AirGlass" Foreground="#70E4CA" FontSize="17" FontWeight="SemiBold"/></Border>
+      </StackPanel>
+      <TextBlock Grid.Row="2" Text="Video opens in its own window. Press Alt + Enter there for full screen." Foreground="{StaticResource Muted}" FontSize="12" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"/>
+     </Grid>
+    </Border>
+    <Border Grid.Row="1" Background="#141E2C" CornerRadius="14" Padding="20,18" Margin="0,18,0,0">
+     <StackPanel>
+      <TextBlock Text="Connect in three steps" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
+      <TextBlock Text="1   Put your iPhone and PC on the same Wi-Fi network." Foreground="#BBC9DC" Margin="0,0,0,8" TextWrapping="Wrap"/>
+      <TextBlock Text="2   Open Control Center → Screen Mirroring on iPhone." Foreground="#BBC9DC" Margin="0,0,0,8" TextWrapping="Wrap"/>
+      <TextBlock x:Name="ConnectStep" Text="3   Select AirGlass from the list." Foreground="#BBC9DC" TextWrapping="Wrap"/>
+     </StackPanel>
+    </Border>
+   </Grid>
+   <Border Grid.Column="1" Background="#141E2C" CornerRadius="16" Padding="22">
+    <Grid><Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel>
+     <TextBlock Text="Receiver settings" FontSize="19" FontWeight="SemiBold" Margin="0,0,0,14"/>
+     <TextBlock Text="Receiver name" Margin="0,0,0,7"/><TextBox x:Name="NameInput" MaxLength="48" AutomationProperties.Name="Receiver name"/>
+     <TextBlock Text="Resolution" Margin="0,12,0,7"/><ComboBox x:Name="ResolutionInput" AutomationProperties.Name="Resolution"><ComboBoxItem Content="480p · 854 × 480" Tag="854x480"/><ComboBoxItem Content="720p · 1280 × 720" Tag="1280x720"/><ComboBoxItem Content="900p · 1600 × 900" Tag="1600x900"/><ComboBoxItem Content="1080p · 1920 × 1080" Tag="1920x1080"/><ComboBoxItem Content="1440p · 2560 × 1440" Tag="2560x1440"/><ComboBoxItem Content="4K · 3840 × 2160" Tag="3840x2160"/></ComboBox>
+     <TextBlock Text="Maximum frame rate" Margin="0,12,0,7"/><ComboBox x:Name="FpsInput" AutomationProperties.Name="Maximum frame rate"><ComboBoxItem Content="15 fps · Less bandwidth" Tag="15"/><ComboBoxItem Content="30 fps · Balanced" Tag="30"/><ComboBoxItem Content="60 fps · Smoother motion" Tag="60"/></ComboBox>
+     <TextBlock Text="Stream size is requested; FPS is a limit. 1440p/4K needs a compatible HEVC iPhone." Foreground="{StaticResource Muted}" TextWrapping="Wrap" FontSize="11" Margin="0,8,0,0"/>
+     <TextBlock Text="Performance preference" Margin="0,12,0,7"/>
+     <ComboBox x:Name="PreferenceInput" AutomationProperties.Name="Performance preference"><ComboBoxItem Content="Best latency" Tag="Latency"/><ComboBoxItem Content="Best picture" Tag="Picture"/></ComboBox>
+     <TextBlock x:Name="PreferenceHint" Foreground="{StaticResource Muted}" TextWrapping="Wrap" FontSize="11" Margin="0,7,0,8"/>
+     <Grid Margin="0,8,0,12"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+      <TextBlock Text="Play iPhone audio" VerticalAlignment="Center"/>
+      <CheckBox Grid.Column="1" x:Name="AudioInput" AutomationProperties.Name="Play iPhone audio" ToolTip="Play or mute iPhone audio after saving settings." Width="46" Height="26" Margin="0" Cursor="Hand">
+       <CheckBox.Template><ControlTemplate TargetType="CheckBox"><Border x:Name="Track" Background="#42516A" CornerRadius="13" BorderBrush="Transparent" BorderThickness="2"><Ellipse x:Name="Knob" Width="18" Height="18" Fill="White" HorizontalAlignment="Left" Margin="2,0"/></Border><ControlTemplate.Triggers><Trigger Property="IsChecked" Value="True"><Setter TargetName="Track" Property="Background" Value="#62DCC4"/><Setter TargetName="Knob" Property="HorizontalAlignment" Value="Right"/></Trigger><Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Track" Property="BorderBrush" Value="White"/></Trigger><Trigger Property="IsEnabled" Value="False"><Setter TargetName="Track" Property="Opacity" Value="0.4"/></Trigger></ControlTemplate.Triggers></ControlTemplate></CheckBox.Template>
+      </CheckBox>
+     </Grid>
+     <Button x:Name="AdvancedButton" Content="Settings  ›" HorizontalAlignment="Stretch" AutomationProperties.Name="Show additional settings"/>
+     <StackPanel x:Name="AdvancedSettings" Visibility="Collapsed" Margin="0,14,0,0">
+     <TextBlock Text="Video decoder" Margin="0,4,0,7"/>
+     <ComboBox x:Name="DecoderInput" AutomationProperties.Name="Video decoder" ToolTip="Automatic checks each codec: Direct3D11 GPU decoding, then compatible NVIDIA NVDEC, then CPU. On NVIDIA GPUs, Direct3D11 also uses NVIDIA hardware. Manual choices remain available."><ComboBoxItem Content="Automatic · detect hardware" Tag="Auto"/><ComboBoxItem Content="NVIDIA NVDEC · RTX / GTX" Tag="Nvidia"/><ComboBoxItem Content="Direct3D11 hardware" Tag="Direct3D11"/><ComboBoxItem Content="Software · CPU" Tag="Software"/></ComboBox>
+     <CheckBox x:Name="SmoothInput" Content="Smooth frame pacing"/>
+     <CheckBox x:Name="FullscreenInput" Content="Open video in full screen"/>
+     </StackPanel>
+    </StackPanel></ScrollViewer>
+    <StackPanel Grid.Row="1" Margin="0,14,0,0">
+     <Button x:Name="ApplyButton" Content="Save settings"/>
+     <TextBlock x:Name="SettingsFeedback" Text="Default: 1080p at up to 30 fps" Foreground="{StaticResource Muted}" FontSize="12" TextWrapping="Wrap" Margin="0,10,0,0"/>
+    </StackPanel></Grid>
+   </Border>
+  </Grid>
+  <Grid Grid.Row="2" Margin="0,20,0,0">
+   <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+   <StackPanel VerticalAlignment="Center"><TextBlock x:Name="NetworkLabel" Text="Checking local network…" Foreground="{StaticResource Muted}" FontSize="12"/><TextBlock x:Name="MessageLabel" Text="Ready when you are." FontSize="12" Foreground="#BBC9DC" Margin="0,5,10,0" TextWrapping="Wrap"/></StackPanel>
+   <Button Grid.Column="1" x:Name="DiagnosticsButton" Content="Connection help" Margin="12,0"/>
+   <Button Grid.Column="2" x:Name="StartButton" Content="Start receiver" Background="#70E4CA" Foreground="#082820" MinWidth="163"/>
+  </Grid>
+ </Grid>
+</Window>
