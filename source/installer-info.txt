@@ -1,0 +1,11 @@
+AirGlass 2.7.1 for Windows 10/11 x64
+
+Setup installs the complete application and an uninstaller for your Windows account. A Start menu shortcut is included; a desktop shortcut is optional.
+
+.NET Framework 4.8 is required. Setup checks for it before installing. Apple Bonjour Service is required for iPhone discovery. If Bonjour is missing, the finish page offers Apple's official download page. Bonjour is a separate Apple installation and may need administrator permission. Setup does not include Apple's installer or change your drivers.
+
+Keep the iPhone and PC on the same local network. Allow the receiver through Windows Firewall on your trusted private/home network if Windows asks. Setup does not disable the firewall or change network settings.
+
+The app's own code is GPL-3.0-or-later. Bundled third-party components retain their own terms, including the separate NVIDIA NVRTC license included in the licenses folder.
+
+Uninstall removes installed application files and shortcuts. Your saved preferences and pairing keys in LocalAppData\AirGlass are retained.

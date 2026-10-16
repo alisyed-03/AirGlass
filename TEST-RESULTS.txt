@@ -1,0 +1,1023 @@
+AirGlass 2.7.1 UI notice update: compiled successfully; XAML loaded and rendered for visual inspection. Notice fits beneath the steps. Native engine and receiver logic are unchanged; previous 2.7 verification follows.
+
+AirGlass 2.7 verification
+
+Manual iPhone comparison: More responsive and smooth.
+Sanitized real-phone measurements: PHONE-TIMING-2.7.json.
+Automated tests below do not operate the iPhone; their manual-test caveat applies to the unattended tests, not the separate user comparison.
+
+Updated UI/settings/startup/shutdown
+PASS: Defaults are 1080p / 30 fps
+PASS: Best latency with smooth pacing is the default
+PASS: New profiles default to Direct3D11
+PASS: Decoder preference Auto preserves hardware/software flag mapping
+PASS: Decoder preference Nvidia preserves hardware/software flag mapping
+PASS: Decoder preference Direct3D11 preserves hardware/software flag mapping
+PASS: Decoder preference Software preserves hardware/software flag mapping
+PASS: UI shows actual sink FPS and measured receiver timing with scope
+PASS: Unavailable timing is not shown as a measured delay
+PASS: 854x480 / 15 correctly configures engine
+PASS: 854x480 / 30 correctly configures engine
+PASS: 854x480 / 60 correctly configures engine
+PASS: 1280x720 / 15 correctly configures engine
+PASS: 1280x720 / 30 correctly configures engine
+PASS: 1280x720 / 60 correctly configures engine
+PASS: 1600x900 / 15 correctly configures engine
+PASS: 1600x900 / 30 correctly configures engine
+PASS: 1600x900 / 60 correctly configures engine
+PASS: 1920x1080 / 15 correctly configures engine
+PASS: 1920x1080 / 30 correctly configures engine
+PASS: 1920x1080 / 60 correctly configures engine
+PASS: 2560x1440 / 15 correctly configures engine
+PASS: 2560x1440 / 30 correctly configures engine
+PASS: 2560x1440 / 60 correctly configures engine
+PASS: 3840x2160 / 15 correctly configures engine
+PASS: 3840x2160 / 30 correctly configures engine
+PASS: 3840x2160 / 60 correctly configures engine
+PASS: Best latency uses native queue tuning and bypasses absolute timestamp waits
+PASS: Low-latency audio and video processing are configured
+PASS: Best picture preserves timing and late frames while using low-latency audio
+PASS: All settings including pacing preference persist across restart
+PASS: Legacy software flag still selects the software decoder
+PASS: NVIDIA decoder preference persists
+PASS: Existing settings are replaced atomically
+PASS: Old settings migrate to smooth Best latency without losing saved quality
+PASS: Pre-2.3 profiles retain their saved decoder choice
+PASS: Audio, fullscreen and software decoding map to engine flags
+PASS: Invalid FPS rejected
+PASS: Names and paths are quoted safely
+PASS: Opening the app automatically starts the receiver
+PASS: Automatically started receiver listens for AirPlay
+PASS: Bonjour observer confirms the receiver is discoverable
+PASS: Saving unchanged settings retains the active receiver
+PASS: UI defaults to 1080p
+PASS: UI defaults to 30 fps
+PASS: UI defaults to Best latency
+PASS: UI defaults to Direct3D11 decoder
+PASS: Smooth pacing is enabled by default
+PASS: Additional settings are hidden initially
+PASS: Audio switch starts on
+PASS: Audio switch saves off
+PASS: Audio switch saves on
+PASS: Settings button reveals additional controls
+PASS: Settings button hides additional controls
+PASS: Save button persists a changed FPS
+PASS: UI saves the Best picture preference
+PASS: Pacing checkbox is disabled in Best picture mode
+PASS: UI saves immediate-display preference
+PASS: UI saves NVIDIA decoder selection
+PASS: Invalid name does not overwrite saved settings
+PASS: Manual Stop remains stopped while the app is open
+PASS: Real receiver opens an AirPlay TCP listener at 15 fps in Latency mode
+PASS: Native video/audio pipeline accepts Latency tuning and fullscreen options
+PASS: Native software compatibility decoder initializes in Latency mode
+PASS: Native pacing preference initializes at 15 fps
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+PASS: Real receiver opens an AirPlay TCP listener at 30 fps in Latency mode
+PASS: Native video/audio pipeline accepts Latency tuning and fullscreen options
+PASS: Native hardware preference initializes in Latency mode
+PASS: Native pacing preference initializes at 30 fps
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+PASS: Real receiver opens an AirPlay TCP listener at 60 fps in Latency mode
+PASS: Native video/audio pipeline accepts Latency tuning and fullscreen options
+PASS: Native hardware preference initializes in Latency mode
+PASS: Native pacing preference initializes at 60 fps
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+PASS: Real receiver opens an AirPlay TCP listener at 15 fps in Picture mode
+PASS: Native video/audio pipeline accepts Picture tuning and fullscreen options
+PASS: Native software compatibility decoder initializes in Picture mode
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+PASS: Real receiver opens an AirPlay TCP listener at 30 fps in Picture mode
+PASS: Native video/audio pipeline accepts Picture tuning and fullscreen options
+PASS: Native hardware preference initializes in Picture mode
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+PASS: Real receiver opens an AirPlay TCP listener at 60 fps in Picture mode
+PASS: Native video/audio pipeline accepts Picture tuning and fullscreen options
+PASS: Native hardware preference initializes in Picture mode
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+Manual iPhone connection, actual stream resolution/FPS and audio remain unverified without an iPhone.
+
+
+High-profile I/P without VUI hints — old baseline
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass renderer: Direct3D11 direct texture display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: immediate display; ceiling=0.00 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=30.2 decode-ms=1.64 processing-ms=1.80 present-ms=2.61 pacing-ms=0.00 jitter-ms=0.00 late-dropped=0 unmatched=0
+PASS: 1920x1080@30 H264 Direct3D11 actual hardware renderer, immediate, decode=1.64 ms input-to-Present=2.61 ms pacing=0.00 ms GPU queue=1
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass renderer: Direct3D11 direct texture display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=33.33 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=30.2 decode-ms=2.08 processing-ms=2.91 present-ms=33.18 pacing-ms=27.45 jitter-ms=15.29 late-dropped=0 unmatched=0
+PASS: 1920x1080@30 H264 Direct3D11 actual hardware renderer, adaptive pacing, decode=2.08 ms input-to-Present=33.18 ms pacing=27.45 ms GPU queue=1
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass decoder: avdec_h264 (software)
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=33.33 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoded format: video/x-raw, format=(string)I420, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=29.7 decode-ms=3.68 processing-ms=3.71 present-ms=28.90 pacing-ms=20.73 jitter-ms=14.90 late-dropped=0 unmatched=0
+PASS: 1920x1080@30 H264 Direct3D11 actual software renderer, adaptive pacing, decode=3.68 ms input-to-Present=28.90 ms pacing=20.73 ms GPU queue=1
+
+
+High-profile I/P without VUI hints — new decoder mode
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass renderer: Direct3D11 direct texture display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: immediate display; ceiling=0.00 ms
+Begin streaming to GStreamer video pipeline
+AirGlass Direct3D11: low-delay H264 picture output enabled
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=29.7 decode-ms=1.58 processing-ms=1.29 present-ms=2.18 pacing-ms=0.00 jitter-ms=0.00 late-dropped=0 unmatched=0
+PASS: 1920x1080@30 H264 Direct3D11 actual hardware renderer, immediate, decode=1.58 ms input-to-Present=2.18 ms pacing=0.00 ms GPU queue=1
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass renderer: Direct3D11 direct texture display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=33.33 ms
+Begin streaming to GStreamer video pipeline
+AirGlass Direct3D11: low-delay H264 picture output enabled
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=30.5 decode-ms=1.47 processing-ms=3.97 present-ms=34.47 pacing-ms=27.57 jitter-ms=14.95 late-dropped=0 unmatched=0
+PASS: 1920x1080@30 H264 Direct3D11 actual hardware renderer, adaptive pacing, decode=1.47 ms input-to-Present=34.47 ms pacing=27.57 ms GPU queue=1
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass decoder: avdec_h264 (software)
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=33.33 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoded format: video/x-raw, format=(string)I420, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=30.2 decode-ms=2.98 processing-ms=3.28 present-ms=22.00 pacing-ms=17.53 jitter-ms=15.53 late-dropped=0 unmatched=0
+PASS: 1920x1080@30 H264 Direct3D11 actual software renderer, adaptive pacing, decode=2.98 ms input-to-Present=22.00 ms pacing=17.53 ms GPU queue=1
+
+
+GPU renderer and five close-under-load cycles
+[OpenH264] this = 0x000001ab596a39f0, Error:CWelsH264SVCEncoder::EncodeFrame(), cmInitParaError.
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass renderer: Direct3D11 direct texture display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: immediate display; ceiling=0.00 ms
+Begin streaming to GStreamer video pipeline
+AirGlass Direct3D11: low-delay H264 picture output enabled; compliance=3
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.1 decode-ms=17.82 processing-ms=17.40 present-ms=17.82 pacing-ms=0.00 jitter-ms=0.00 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Direct3D11 actual hardware renderer, immediate, decode=17.82 ms input-to-Present=17.82 ms pacing=0.00 ms GPU queue=1
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass renderer: Direct3D11 direct texture display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass Direct3D11: low-delay H264 picture output enabled; compliance=3
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=60.2 decode-ms=17.20 processing-ms=17.44 present-ms=30.87 pacing-ms=9.74 jitter-ms=1.90 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Direct3D11 actual hardware renderer, adaptive pacing, decode=17.20 ms input-to-Present=30.87 ms pacing=9.74 ms GPU queue=1
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass decoder: avdec_h264 (software)
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoded format: video/x-raw, format=(string)I420, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, pixel-aspect-ratio=(fraction)1/1, chroma-site=(string)mpeg2, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.8 decode-ms=2.26 processing-ms=2.39 present-ms=13.18 pacing-ms=7.01 jitter-ms=2.43 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Direct3D11 actual software renderer, adaptive pacing, decode=2.26 ms input-to-Present=13.18 ms pacing=7.01 ms GPU queue=1
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+
+(renderer_test.exe:5128): GLib-WARNING **: 18:05:04.810: g_set_application_name() called multiple times
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass Direct3D11: low-delay H264 picture output enabled; compliance=3
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+PASS: close-under-load cycle 1 flushes pushes and joins the producer before renderer destruction
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+
+(renderer_test.exe:5128): GLib-WARNING **: 18:05:05.582: g_set_application_name() called multiple times
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass Direct3D11: low-delay H264 picture output enabled; compliance=3
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+PASS: close-under-load cycle 2 flushes pushes and joins the producer before renderer destruction
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+
+(renderer_test.exe:5128): GLib-WARNING **: 18:05:06.359: g_set_application_name() called multiple times
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass Direct3D11: low-delay H264 picture output enabled; compliance=3
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+PASS: close-under-load cycle 3 flushes pushes and joins the producer before renderer destruction
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+
+(renderer_test.exe:5128): GLib-WARNING **: 18:05:07.151: g_set_application_name() called multiple times
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass Direct3D11: low-delay H264 picture output enabled; compliance=3
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+PASS: close-under-load cycle 4 flushes pushes and joins the producer before renderer destruction
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+
+(renderer_test.exe:5128): GLib-WARNING **: 18:05:08.007: g_set_application_name() called multiple times
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass Direct3D11: low-delay H264 picture output enabled; compliance=3
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+PASS: close-under-load cycle 5 flushes pushes and joins the producer before renderer destruction
+
+
+Historical checks
+AirGlass 2.6 verification
+
+Physical iPhone comparison remains pending. Measurements below exclude end-to-end phone/display latency.
+
+UI/default decoder/local discovery observer
+PASS: Defaults are 1080p / 30 fps
+PASS: Best latency with smooth pacing is the default
+PASS: New profiles default to Direct3D11
+PASS: Decoder preference Auto preserves hardware/software flag mapping
+PASS: Decoder preference Nvidia preserves hardware/software flag mapping
+PASS: Decoder preference Direct3D11 preserves hardware/software flag mapping
+PASS: Decoder preference Software preserves hardware/software flag mapping
+PASS: UI shows actual sink FPS and measured receiver timing with scope
+PASS: Unavailable timing is not shown as a measured delay
+PASS: 854x480 / 15 correctly configures engine
+PASS: 854x480 / 30 correctly configures engine
+PASS: 854x480 / 60 correctly configures engine
+PASS: 1280x720 / 15 correctly configures engine
+PASS: 1280x720 / 30 correctly configures engine
+PASS: 1280x720 / 60 correctly configures engine
+PASS: 1600x900 / 15 correctly configures engine
+PASS: 1600x900 / 30 correctly configures engine
+PASS: 1600x900 / 60 correctly configures engine
+PASS: 1920x1080 / 15 correctly configures engine
+PASS: 1920x1080 / 30 correctly configures engine
+PASS: 1920x1080 / 60 correctly configures engine
+PASS: 2560x1440 / 15 correctly configures engine
+PASS: 2560x1440 / 30 correctly configures engine
+PASS: 2560x1440 / 60 correctly configures engine
+PASS: 3840x2160 / 15 correctly configures engine
+PASS: 3840x2160 / 30 correctly configures engine
+PASS: 3840x2160 / 60 correctly configures engine
+PASS: Best latency uses native queue tuning and bypasses absolute timestamp waits
+PASS: Low-latency audio and video processing are configured
+PASS: Best picture preserves timing and late frames while using low-latency audio
+PASS: All settings including pacing preference persist across restart
+PASS: Legacy software flag still selects the software decoder
+PASS: NVIDIA decoder preference persists
+PASS: Existing settings are replaced atomically
+PASS: Old settings migrate to smooth Best latency without losing saved quality
+PASS: Pre-2.3 profiles retain their saved decoder choice
+PASS: Audio, fullscreen and software decoding map to engine flags
+PASS: Invalid FPS rejected
+PASS: Names and paths are quoted safely
+PASS: Opening the app automatically starts the receiver
+PASS: Automatically started receiver listens for AirPlay
+PASS: Bonjour observer confirms the receiver is discoverable
+PASS: Saving unchanged settings retains the active receiver
+PASS: UI defaults to 1080p
+PASS: UI defaults to 30 fps
+PASS: UI defaults to Best latency
+PASS: UI defaults to Direct3D11 decoder
+PASS: Smooth pacing is enabled by default
+PASS: Additional settings are hidden initially
+PASS: Audio switch starts on
+PASS: Audio switch saves off
+PASS: Audio switch saves on
+PASS: Settings button reveals additional controls
+PASS: Settings button hides additional controls
+PASS: Save button persists a changed FPS
+PASS: UI saves the Best picture preference
+PASS: Pacing checkbox is disabled in Best picture mode
+PASS: UI saves immediate-display preference
+PASS: UI saves NVIDIA decoder selection
+PASS: Invalid name does not overwrite saved settings
+PASS: Manual Stop remains stopped while the app is open
+PASS: Real receiver opens an AirPlay TCP listener at 15 fps in Latency mode
+PASS: Native video/audio pipeline accepts Latency tuning and fullscreen options
+PASS: Native software compatibility decoder initializes in Latency mode
+PASS: Native pacing preference initializes at 15 fps
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+PASS: Real receiver opens an AirPlay TCP listener at 30 fps in Latency mode
+PASS: Native video/audio pipeline accepts Latency tuning and fullscreen options
+PASS: Native hardware preference initializes in Latency mode
+PASS: Native pacing preference initializes at 30 fps
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+PASS: Real receiver opens an AirPlay TCP listener at 60 fps in Latency mode
+PASS: Native video/audio pipeline accepts Latency tuning and fullscreen options
+PASS: Native hardware preference initializes in Latency mode
+PASS: Native pacing preference initializes at 60 fps
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+PASS: Real receiver opens an AirPlay TCP listener at 15 fps in Picture mode
+PASS: Native video/audio pipeline accepts Picture tuning and fullscreen options
+PASS: Native software compatibility decoder initializes in Picture mode
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+PASS: Real receiver opens an AirPlay TCP listener at 30 fps in Picture mode
+PASS: Native video/audio pipeline accepts Picture tuning and fullscreen options
+PASS: Native hardware preference initializes in Picture mode
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+PASS: Real receiver opens an AirPlay TCP listener at 60 fps in Picture mode
+PASS: Native video/audio pipeline accepts Picture tuning and fullscreen options
+PASS: Native hardware preference initializes in Picture mode
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+Manual iPhone connection, actual stream resolution/FPS and audio remain unverified without an iPhone.
+
+
+Actual Receiver settings-restart lifecycle
+PASS: Same-name settings restart 1 is locally discoverable and listening
+PASS: Restart retains the advertised port block
+PASS: Goodbye and local removal precede replacement
+PASS: Restart observes the Bonjour settling interval
+PASS: Same-name settings restart 2 is locally discoverable and listening
+PASS: Restart retains the advertised port block
+PASS: Goodbye and local removal precede replacement
+PASS: Restart observes the Bonjour settling interval
+PASS: Same-name settings restart 3 is locally discoverable and listening
+PASS: Restart retains the advertised port block
+PASS: Goodbye and local removal precede replacement
+PASS: Restart observes the Bonjour settling interval
+PASS: Same-name settings restart 4 is locally discoverable and listening
+PASS: Restart retains the advertised port block
+PASS: Goodbye and local removal precede replacement
+PASS: Restart observes the Bonjour settling interval
+PASS: Same-name settings restart 5 is locally discoverable and listening
+PASS: Restart retains the advertised port block
+PASS: Goodbye and local removal precede replacement
+PASS: Restart observes the Bonjour settling interval
+PASS: Same-name settings restart 6 is locally discoverable and listening
+PASS: Restart retains the advertised port block
+PASS: Goodbye and local removal precede replacement
+PASS: Restart observes the Bonjour settling interval
+PASS: Same-name settings restart 7 is locally discoverable and listening
+PASS: Restart retains the advertised port block
+PASS: Goodbye and local removal precede replacement
+PASS: Restart observes the Bonjour settling interval
+PASS: Same-name settings restart 8 is locally discoverable and listening
+PASS: Restart retains the advertised port block
+PASS: Goodbye and local removal precede replacement
+
+
+direct-h264-30
+[OpenH264] this = 0x000001eb31941300, Error:CWelsH264SVCEncoder::EncodeFrame(), cmInitParaError.
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass renderer: Direct3D11 direct texture display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: immediate display; ceiling=0.00 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=30.2 decode-ms=34.56 processing-ms=34.61 present-ms=35.26 pacing-ms=0.00 jitter-ms=0.00 late-dropped=0 unmatched=0
+PASS: 1920x1080@30 H264 Direct3D11 actual hardware renderer, immediate, decode=34.56 ms input-to-Present=35.26 ms pacing=0.00 ms GPU queue=1
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass renderer: Direct3D11 direct texture display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=33.33 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=30.1 decode-ms=33.69 processing-ms=33.71 present-ms=40.24 pacing-ms=4.00 jitter-ms=1.89 late-dropped=0 unmatched=0
+PASS: 1920x1080@30 H264 Direct3D11 actual hardware renderer, adaptive pacing, decode=33.69 ms input-to-Present=40.24 ms pacing=4.00 ms GPU queue=1
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass decoder: avdec_h264 (software)
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=33.33 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoded format: video/x-raw, format=(string)I420, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, pixel-aspect-ratio=(fraction)1/1, chroma-site=(string)mpeg2, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=30.2 decode-ms=2.26 processing-ms=2.49 present-ms=13.45 pacing-ms=7.25 jitter-ms=2.25 late-dropped=0 unmatched=0
+PASS: 1920x1080@30 H264 Direct3D11 actual software renderer, adaptive pacing, decode=2.26 ms input-to-Present=13.45 ms pacing=7.25 ms GPU queue=1
+
+
+direct-h264-60
+[OpenH264] this = 0x00000226beba19c0, Error:CWelsH264SVCEncoder::EncodeFrame(), cmInitParaError.
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass renderer: Direct3D11 direct texture display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: immediate display; ceiling=0.00 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.7 decode-ms=17.22 processing-ms=17.20 present-ms=17.53 pacing-ms=0.00 jitter-ms=0.00 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Direct3D11 actual hardware renderer, immediate, decode=17.22 ms input-to-Present=17.53 ms pacing=0.00 ms GPU queue=1
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass renderer: Direct3D11 direct texture display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=60.1 decode-ms=17.09 processing-ms=17.34 present-ms=30.86 pacing-ms=9.74 jitter-ms=1.71 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Direct3D11 actual hardware renderer, adaptive pacing, decode=17.09 ms input-to-Present=30.86 ms pacing=9.74 ms GPU queue=1
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass decoder: avdec_h264 (software)
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoded format: video/x-raw, format=(string)I420, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, pixel-aspect-ratio=(fraction)1/1, chroma-site=(string)mpeg2, framerate=(fraction)0/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.8 decode-ms=2.03 processing-ms=2.14 present-ms=12.24 pacing-ms=6.44 jitter-ms=2.65 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Direct3D11 actual software renderer, adaptive pacing, decode=2.03 ms input-to-Present=12.24 ms pacing=6.44 ms GPU queue=1
+
+
+direct-hevc-60
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass renderer: Direct3D11 direct texture display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: immediate display; ceiling=0.00 ms
+AirGlass renderer: Direct3D11 direct texture display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: immediate display; ceiling=0.00 ms
+*** video format is h265 high definition (HD/4K) video 0x0
+Begin streaming to GStreamer video pipeline
+AirGlass decoder: d3d11h265dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.6 decode-ms=0.95 processing-ms=0.70 present-ms=1.03 pacing-ms=0.00 jitter-ms=0.00 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 HEVC Direct3D11 actual hardware renderer, immediate, decode=0.95 ms input-to-Present=1.03 ms pacing=0.00 ms GPU queue=1
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass renderer: Direct3D11 direct texture display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+AirGlass renderer: Direct3D11 direct texture display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+*** video format is h265 high definition (HD/4K) video 0x0
+Begin streaming to GStreamer video pipeline
+AirGlass decoder: d3d11h265dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=60.0 decode-ms=0.92 processing-ms=1.02 present-ms=15.33 pacing-ms=10.99 jitter-ms=1.93 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 HEVC Direct3D11 actual hardware renderer, adaptive pacing, decode=0.92 ms input-to-Present=15.33 ms pacing=10.99 ms GPU queue=1
+AirGlass timer: 1 ms receiver scheduling
+AirGlass Direct3D11: NVIDIA plugin is opt-in; CPU fallback retained
+AirGlass preferred decoder: d3d11h264dec (automatic fallback available)
+AirGlass preferred decoder: d3d11h265dec (automatic fallback available)
+AirGlass decoder: avdec_h264 (software)
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+AirGlass decoder: avdec_h265 (software)
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+*** video format is h265 high definition (HD/4K) video 0x0
+Begin streaming to GStreamer video pipeline
+AirGlass decoded format: video/x-raw, format=(string)I420, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, pixel-aspect-ratio=(fraction)1/1, chroma-site=(string)mpeg2, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.5 decode-ms=4.09 processing-ms=4.27 present-ms=17.11 pacing-ms=9.80 jitter-ms=3.42 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 HEVC Direct3D11 actual software renderer, adaptive pacing, decode=4.09 ms input-to-Present=17.11 ms pacing=9.80 ms GPU queue=1
+
+
+pacing
+PASS: 15 fps clean-link pacing settles to 4 ms; old fixed budget 66.67 ms
+PASS: 15 fps variation growth, budget ceiling, stall recovery and 200 ppm clock drift
+PASS: 15 fps temporary jitter cushion recovers within six clean seconds
+15 fps immediate: frames=24 mean interval error=39.032 ms
+15 fps paced: frames=24 mean interval error=1.253 ms
+PASS: 15 fps real sink reduces controlled arrival jitter
+PASS: 30 fps clean-link pacing settles to 4 ms; old fixed budget 33.33 ms
+PASS: 30 fps variation growth, budget ceiling, stall recovery and 200 ppm clock drift
+PASS: 30 fps temporary jitter cushion recovers within six clean seconds
+30 fps immediate: frames=24 mean interval error=19.440 ms
+30 fps paced: frames=24 mean interval error=1.130 ms
+PASS: 30 fps real sink reduces controlled arrival jitter
+PASS: 60 fps clean-link pacing settles to 4 ms; old fixed budget 16.67 ms
+PASS: 60 fps variation growth, budget ceiling, stall recovery and 200 ppm clock drift
+PASS: 60 fps temporary jitter cushion recovers within six clean seconds
+60 fps immediate: frames=24 mean interval error=10.118 ms
+60 fps paced: frames=24 mean interval error=0.710 ms
+PASS: 60 fps real sink reduces controlled arrival jitter
+
+
+Historical 2.5 and earlier checks
+AirGlass 2.5 verification
+
+Simplified settings, audio switch and advanced settings visibility; graceful shutdown and same-name Bonjour restart lifecycle.
+Physical iPhone reconnection after this update still requires user verification.
+
+Final interface/settings/native stop tests
+PASS: Defaults are 1080p / 30 fps
+PASS: Best latency with smooth pacing is the default
+PASS: New profiles allow automatic hardware decoding
+PASS: Decoder preference Auto preserves hardware/software flag mapping
+PASS: Decoder preference Nvidia preserves hardware/software flag mapping
+PASS: Decoder preference Direct3D11 preserves hardware/software flag mapping
+PASS: Decoder preference Software preserves hardware/software flag mapping
+PASS: UI shows actual sink FPS and measured receiver timing with scope
+PASS: Unavailable timing is not shown as a measured delay
+PASS: 854x480 / 15 correctly configures engine
+PASS: 854x480 / 30 correctly configures engine
+PASS: 854x480 / 60 correctly configures engine
+PASS: 1280x720 / 15 correctly configures engine
+PASS: 1280x720 / 30 correctly configures engine
+PASS: 1280x720 / 60 correctly configures engine
+PASS: 1600x900 / 15 correctly configures engine
+PASS: 1600x900 / 30 correctly configures engine
+PASS: 1600x900 / 60 correctly configures engine
+PASS: 1920x1080 / 15 correctly configures engine
+PASS: 1920x1080 / 30 correctly configures engine
+PASS: 1920x1080 / 60 correctly configures engine
+PASS: 2560x1440 / 15 correctly configures engine
+PASS: 2560x1440 / 30 correctly configures engine
+PASS: 2560x1440 / 60 correctly configures engine
+PASS: 3840x2160 / 15 correctly configures engine
+PASS: 3840x2160 / 30 correctly configures engine
+PASS: 3840x2160 / 60 correctly configures engine
+PASS: Best latency uses native queue tuning and bypasses absolute timestamp waits
+PASS: Low-latency audio and video processing are configured
+PASS: Best picture preserves timing and late frames while using low-latency audio
+PASS: All settings including pacing preference persist across restart
+PASS: Legacy software flag still selects the software decoder
+PASS: NVIDIA decoder preference persists
+PASS: Existing settings are replaced atomically
+PASS: Old settings migrate to smooth Best latency without losing saved quality
+PASS: Pre-2.3 profiles retain their saved decoder choice
+PASS: Audio, fullscreen and software decoding map to engine flags
+PASS: Invalid FPS rejected
+PASS: Names and paths are quoted safely
+PASS: Opening the app automatically starts the receiver
+PASS: Automatically started receiver listens for AirPlay
+PASS: UI defaults to 1080p
+PASS: UI defaults to 30 fps
+PASS: UI defaults to Best latency
+PASS: UI defaults to Automatic decoder
+PASS: Smooth pacing is enabled by default
+PASS: Additional settings are hidden initially
+PASS: Audio switch starts on
+PASS: Audio switch saves off
+PASS: Audio switch saves on
+PASS: Settings button reveals additional controls
+PASS: Settings button hides additional controls
+PASS: Save button persists a changed FPS
+PASS: UI saves the Best picture preference
+PASS: Pacing checkbox is disabled in Best picture mode
+PASS: UI saves immediate-display preference
+PASS: UI saves NVIDIA decoder selection
+PASS: Invalid name does not overwrite saved settings
+PASS: Manual Stop remains stopped while the app is open
+PASS: Real receiver opens an AirPlay TCP listener at 15 fps in Latency mode
+PASS: Native video/audio pipeline accepts Latency tuning and fullscreen options
+PASS: Native software compatibility decoder initializes in Latency mode
+PASS: Native pacing preference initializes at 15 fps
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+PASS: Real receiver opens an AirPlay TCP listener at 30 fps in Latency mode
+PASS: Native video/audio pipeline accepts Latency tuning and fullscreen options
+PASS: Native hardware preference initializes in Latency mode
+PASS: Native pacing preference initializes at 30 fps
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+PASS: Real receiver opens an AirPlay TCP listener at 60 fps in Latency mode
+PASS: Native video/audio pipeline accepts Latency tuning and fullscreen options
+PASS: Native hardware preference initializes in Latency mode
+PASS: Native pacing preference initializes at 60 fps
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+PASS: Real receiver opens an AirPlay TCP listener at 15 fps in Picture mode
+PASS: Native video/audio pipeline accepts Picture tuning and fullscreen options
+PASS: Native software compatibility decoder initializes in Picture mode
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+PASS: Real receiver opens an AirPlay TCP listener at 30 fps in Picture mode
+PASS: Native video/audio pipeline accepts Picture tuning and fullscreen options
+PASS: Native hardware preference initializes in Picture mode
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+PASS: Real receiver opens an AirPlay TCP listener at 60 fps in Picture mode
+PASS: Native video/audio pipeline accepts Picture tuning and fullscreen options
+PASS: Native hardware preference initializes in Picture mode
+PASS: Stop terminates receiver and releases ports
+PASS: Stop withdraws Bonjour services gracefully
+Manual iPhone connection, actual stream resolution/FPS and audio remain unverified without an iPhone.
+
+Persistent Bonjour browse/resolve/removal across settings restarts
+PASS: cycle 1, same receiver name; add/resolve/current 1920x1080@15/graceful stop/remove
+PASS: cycle 2, same receiver name; add/resolve/current 1280x720@30/graceful stop/remove
+PASS: cycle 3, same receiver name; add/resolve/current 1920x1080@60/graceful stop/remove
+PASS: cycle 4, same receiver name; add/resolve/current 1280x720@15/graceful stop/remove
+PASS: cycle 5, same receiver name; add/resolve/current 1920x1080@30/graceful stop/remove
+PASS: cycle 6, same receiver name; add/resolve/current 1280x720@60/graceful stop/remove
+PASS: cycle 7, same receiver name; add/resolve/current 1920x1080@15/graceful stop/remove
+PASS: cycle 8, same receiver name; add/resolve/current 1280x720@30/graceful stop/remove
+
+
+Previous 2.4 portability and codec checks retained below
+
+AirGlass 2.4 verification
+
+RTX 3060 Ti on Windows. Synthetic 1080p60 streams exercise the actual renderer.
+Missing hardware capabilities are simulated; other physical GPUs/clean Windows were not available.
+Receiver timing excludes phone/network/GPU completion/scanout.
+
+Relocated UI, settings and native startup
+=========================================
+PASS: Defaults are 1080p / 30 fps
+PASS: Best latency with smooth pacing is the default
+PASS: New profiles allow automatic hardware decoding
+PASS: Decoder preference Auto preserves hardware/software flag mapping
+PASS: Decoder preference Nvidia preserves hardware/software flag mapping
+PASS: Decoder preference Direct3D11 preserves hardware/software flag mapping
+PASS: Decoder preference Software preserves hardware/software flag mapping
+PASS: UI shows actual sink FPS and measured receiver timing with scope
+PASS: Unavailable timing is not shown as a measured delay
+PASS: 854x480 / 15 correctly configures engine
+PASS: 854x480 / 30 correctly configures engine
+PASS: 854x480 / 60 correctly configures engine
+PASS: 1280x720 / 15 correctly configures engine
+PASS: 1280x720 / 30 correctly configures engine
+PASS: 1280x720 / 60 correctly configures engine
+PASS: 1600x900 / 15 correctly configures engine
+PASS: 1600x900 / 30 correctly configures engine
+PASS: 1600x900 / 60 correctly configures engine
+PASS: 1920x1080 / 15 correctly configures engine
+PASS: 1920x1080 / 30 correctly configures engine
+PASS: 1920x1080 / 60 correctly configures engine
+PASS: 2560x1440 / 15 correctly configures engine
+PASS: 2560x1440 / 30 correctly configures engine
+PASS: 2560x1440 / 60 correctly configures engine
+PASS: 3840x2160 / 15 correctly configures engine
+PASS: 3840x2160 / 30 correctly configures engine
+PASS: 3840x2160 / 60 correctly configures engine
+PASS: Best latency uses native queue tuning and bypasses absolute timestamp waits
+PASS: Low-latency audio and video processing are configured
+PASS: Best picture preserves timing and late frames while using low-latency audio
+PASS: All settings including pacing preference persist across restart
+PASS: Legacy software flag still selects the software decoder
+PASS: NVIDIA decoder preference persists
+PASS: Existing settings are replaced atomically
+PASS: Old settings migrate to smooth Best latency without losing saved quality
+PASS: Pre-2.3 profiles retain their saved decoder choice
+PASS: Audio, fullscreen and software decoding map to engine flags
+PASS: Invalid FPS rejected
+PASS: Names and paths are quoted safely
+PASS: Opening the app automatically starts the receiver
+PASS: Automatically started receiver listens for AirPlay
+PASS: UI defaults to 1080p
+PASS: UI defaults to 30 fps
+PASS: UI defaults to Best latency
+PASS: UI defaults to Automatic decoder
+PASS: Smooth pacing is enabled by default
+PASS: Save button persists a changed FPS
+PASS: UI saves the Best picture preference
+PASS: Pacing checkbox is disabled in Best picture mode
+PASS: UI saves immediate-display preference
+PASS: UI saves NVIDIA decoder selection
+PASS: Invalid name does not overwrite saved settings
+PASS: Manual Stop remains stopped while the app is open
+PASS: Real receiver opens an AirPlay TCP listener at 15 fps in Latency mode
+PASS: Native video/audio pipeline accepts Latency tuning and fullscreen options
+PASS: Native software compatibility decoder initializes in Latency mode
+PASS: Native pacing preference initializes at 15 fps
+PASS: Stop terminates receiver and releases ports
+PASS: Real receiver opens an AirPlay TCP listener at 30 fps in Latency mode
+PASS: Native video/audio pipeline accepts Latency tuning and fullscreen options
+PASS: Native hardware preference initializes in Latency mode
+PASS: Native pacing preference initializes at 30 fps
+PASS: Stop terminates receiver and releases ports
+PASS: Real receiver opens an AirPlay TCP listener at 60 fps in Latency mode
+PASS: Native video/audio pipeline accepts Latency tuning and fullscreen options
+PASS: Native hardware preference initializes in Latency mode
+PASS: Native pacing preference initializes at 60 fps
+PASS: Stop terminates receiver and releases ports
+PASS: Real receiver opens an AirPlay TCP listener at 15 fps in Picture mode
+PASS: Native video/audio pipeline accepts Picture tuning and fullscreen options
+PASS: Native software compatibility decoder initializes in Picture mode
+PASS: Stop terminates receiver and releases ports
+PASS: Real receiver opens an AirPlay TCP listener at 30 fps in Picture mode
+PASS: Native video/audio pipeline accepts Picture tuning and fullscreen options
+PASS: Native hardware preference initializes in Picture mode
+PASS: Stop terminates receiver and releases ports
+PASS: Real receiver opens an AirPlay TCP listener at 60 fps in Picture mode
+PASS: Native video/audio pipeline accepts Picture tuning and fullscreen options
+PASS: Native hardware preference initializes in Picture mode
+PASS: Stop terminates receiver and releases ports
+Manual iPhone connection, actual stream resolution/FPS and audio remain unverified without an iPhone.
+
+
+Relocated protocol and discovery
+================================
+PASS: Latency mode RTSP /info advertises 1920x1080, maxFPS=15
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Latency mode RTSP /info advertises 1920x1080, maxFPS=30
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Latency mode RTSP /info advertises 1920x1080, maxFPS=60
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Latency mode RTSP /info advertises 1280x720, maxFPS=30
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Latency mode RTSP /info advertises 2560x1440, maxFPS=30
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Picture mode RTSP /info advertises 1920x1080, maxFPS=15
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Picture mode RTSP /info advertises 1920x1080, maxFPS=30
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Picture mode RTSP /info advertises 1920x1080, maxFPS=60
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Picture mode RTSP /info advertises 1280x720, maxFPS=30
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Picture mode RTSP /info advertises 2560x1440, maxFPS=30
+PASS: Bonjour discovers receiver as an AirPlay service
+
+Unicode data paths, configuration and persistent keys
+=====================================================
+PASS: Latency mode RTSP /info advertises 1920x1080, maxFPS=15
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Latency mode RTSP /info advertises 1920x1080, maxFPS=30
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Latency mode RTSP /info advertises 1920x1080, maxFPS=60
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Latency mode RTSP /info advertises 1280x720, maxFPS=30
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Latency mode RTSP /info advertises 2560x1440, maxFPS=30
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Picture mode RTSP /info advertises 1920x1080, maxFPS=15
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Picture mode RTSP /info advertises 1920x1080, maxFPS=30
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Picture mode RTSP /info advertises 1920x1080, maxFPS=60
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Picture mode RTSP /info advertises 1280x720, maxFPS=30
+PASS: Bonjour discovers receiver as an AirPlay service
+PASS: Picture mode RTSP /info advertises 2560x1440, maxFPS=30
+PASS: Bonjour discovers receiver as an AirPlay service
+
+auto-h264
+=========
+AirGlass automatic decoder: H264 -> d3d11h264dec (NVIDIA available; Direct3D11 available; software available)
+AirGlass automatic decoder: HEVC -> d3d11h265dec (NVIDIA available; Direct3D11 available; software available)
+AirGlass renderer: Direct3D11 GPU conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: immediate display; ceiling=0.00 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.3 decode-ms=1.52 processing-ms=0.85 present-ms=1.21 pacing-ms=0.00 jitter-ms=0.00 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Auto actual hardware renderer, immediate, decode=1.52 ms input-to-Present=1.21 ms pacing=0.00 ms GPU queue=1
+AirGlass automatic decoder: H264 -> d3d11h264dec (NVIDIA available; Direct3D11 available; software available)
+AirGlass automatic decoder: HEVC -> d3d11h265dec (NVIDIA available; Direct3D11 available; software available)
+AirGlass renderer: Direct3D11 GPU conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.9 decode-ms=1.32 processing-ms=1.34 present-ms=17.08 pacing-ms=15.58 jitter-ms=2.14 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Auto actual hardware renderer, adaptive pacing, decode=1.32 ms input-to-Present=17.08 ms pacing=15.58 ms GPU queue=1
+AirGlass automatic decoder: H264 -> d3d11h264dec (NVIDIA available; Direct3D11 available; software available)
+AirGlass automatic decoder: HEVC -> d3d11h265dec (NVIDIA available; Direct3D11 available; software available)
+AirGlass decoder: avdec_h264 (software)
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoded format: video/x-raw, format=(string)I420, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, pixel-aspect-ratio=(fraction)1/1, chroma-site=(string)mpeg2, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.4 decode-ms=2.04 processing-ms=2.10 present-ms=16.35 pacing-ms=13.13 jitter-ms=1.90 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Auto actual software renderer, adaptive pacing, decode=2.04 ms input-to-Present=16.35 ms pacing=13.13 ms GPU queue=1
+
+
+auto-hevc
+=========
+AirGlass automatic decoder: H264 -> d3d11h264dec (NVIDIA available; Direct3D11 available; software available)
+AirGlass automatic decoder: HEVC -> d3d11h265dec (NVIDIA available; Direct3D11 available; software available)
+AirGlass renderer: Direct3D11 GPU conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: immediate display; ceiling=0.00 ms
+AirGlass renderer: Direct3D11 GPU conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: immediate display; ceiling=0.00 ms
+*** video format is h265 high definition (HD/4K) video 0x0
+Begin streaming to GStreamer video pipeline
+AirGlass decoder: d3d11h265dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.8 decode-ms=1.54 processing-ms=0.97 present-ms=1.31 pacing-ms=0.00 jitter-ms=0.00 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 HEVC Auto actual hardware renderer, immediate, decode=1.54 ms input-to-Present=1.31 ms pacing=0.00 ms GPU queue=1
+AirGlass automatic decoder: H264 -> d3d11h264dec (NVIDIA available; Direct3D11 available; software available)
+AirGlass automatic decoder: HEVC -> d3d11h265dec (NVIDIA available; Direct3D11 available; software available)
+AirGlass renderer: Direct3D11 GPU conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+AirGlass renderer: Direct3D11 GPU conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+*** video format is h265 high definition (HD/4K) video 0x0
+Begin streaming to GStreamer video pipeline
+AirGlass decoder: d3d11h265dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.9 decode-ms=1.22 processing-ms=1.18 present-ms=16.95 pacing-ms=15.58 jitter-ms=1.93 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 HEVC Auto actual hardware renderer, adaptive pacing, decode=1.22 ms input-to-Present=16.95 ms pacing=15.58 ms GPU queue=1
+AirGlass automatic decoder: H264 -> d3d11h264dec (NVIDIA available; Direct3D11 available; software available)
+AirGlass automatic decoder: HEVC -> d3d11h265dec (NVIDIA available; Direct3D11 available; software available)
+AirGlass decoder: avdec_h264 (software)
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+AirGlass decoder: avdec_h265 (software)
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+*** video format is h265 high definition (HD/4K) video 0x0
+Begin streaming to GStreamer video pipeline
+AirGlass decoded format: video/x-raw, format=(string)I420, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, pixel-aspect-ratio=(fraction)1/1, chroma-site=(string)mpeg2, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.3 decode-ms=3.04 processing-ms=3.06 present-ms=16.37 pacing-ms=12.43 jitter-ms=2.49 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 HEVC Auto actual software renderer, adaptive pacing, decode=3.04 ms input-to-Present=16.37 ms pacing=12.43 ms GPU queue=1
+
+
+auto-no-direct3d
+================
+AirGlass automatic decoder: H264 -> nvh264dec (NVIDIA available; Direct3D11 unavailable; software available)
+AirGlass automatic decoder: HEVC -> nvh265dec (NVIDIA available; Direct3D11 unavailable; software available)
+AirGlass renderer: Direct3D11 GPU conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: immediate display; ceiling=0.00 ms
+Begin streaming to GStreamer video pipeline
+AirGlass NVDEC: nvh264dec max-display-delay=0
+AirGlass decoder: nvh264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)I420, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=60.8 decode-ms=10.10 processing-ms=5.19 present-ms=5.64 pacing-ms=0.00 jitter-ms=0.00 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Auto actual hardware renderer, immediate, decode=10.10 ms input-to-Present=5.64 ms pacing=0.00 ms GPU queue=1
+AirGlass automatic decoder: H264 -> nvh264dec (NVIDIA available; Direct3D11 unavailable; software available)
+AirGlass automatic decoder: HEVC -> nvh265dec (NVIDIA available; Direct3D11 unavailable; software available)
+AirGlass renderer: Direct3D11 GPU conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass NVDEC: nvh264dec max-display-delay=0
+AirGlass decoder: nvh264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)I420, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.8 decode-ms=5.94 processing-ms=4.55 present-ms=20.63 pacing-ms=15.67 jitter-ms=1.93 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Auto actual hardware renderer, adaptive pacing, decode=5.94 ms input-to-Present=20.63 ms pacing=15.67 ms GPU queue=1
+AirGlass automatic decoder: H264 -> nvh264dec (NVIDIA available; Direct3D11 unavailable; software available)
+AirGlass automatic decoder: HEVC -> nvh265dec (NVIDIA available; Direct3D11 unavailable; software available)
+AirGlass decoder: avdec_h264 (software)
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoded format: video/x-raw, format=(string)I420, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, pixel-aspect-ratio=(fraction)1/1, chroma-site=(string)mpeg2, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.3 decode-ms=1.95 processing-ms=1.97 present-ms=14.13 pacing-ms=11.16 jitter-ms=1.94 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Auto actual software renderer, adaptive pacing, decode=1.95 ms input-to-Present=14.13 ms pacing=11.16 ms GPU queue=1
+
+
+auto-no-nvidia
+==============
+AirGlass automatic decoder: H264 -> d3d11h264dec (NVIDIA unavailable; Direct3D11 available; software available)
+AirGlass automatic decoder: HEVC -> d3d11h265dec (NVIDIA unavailable; Direct3D11 available; software available)
+AirGlass renderer: Direct3D11 GPU conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: immediate display; ceiling=0.00 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.2 decode-ms=1.48 processing-ms=0.82 present-ms=1.18 pacing-ms=0.00 jitter-ms=0.00 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Auto actual hardware renderer, immediate, decode=1.48 ms input-to-Present=1.18 ms pacing=0.00 ms GPU queue=1
+AirGlass automatic decoder: H264 -> d3d11h264dec (NVIDIA unavailable; Direct3D11 available; software available)
+AirGlass automatic decoder: HEVC -> d3d11h265dec (NVIDIA unavailable; Direct3D11 available; software available)
+AirGlass renderer: Direct3D11 GPU conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoder: d3d11h264dec (hardware)
+AirGlass decoded format: video/x-raw(memory:D3D11Memory), format=(string)NV12, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, multiview-mode=(string)mono, multiview-flags=(GstVideoMultiviewFlagsSet)0:ffffffff:/right-view-first/left-flipped/left-flopped/right-flipped/right-flopped/half-aspect/mixed-mono, pixel-aspect-ratio=(fraction)1/1, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.8 decode-ms=1.11 processing-ms=1.17 present-ms=16.88 pacing-ms=15.25 jitter-ms=1.51 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Auto actual hardware renderer, adaptive pacing, decode=1.11 ms input-to-Present=16.88 ms pacing=15.25 ms GPU queue=1
+AirGlass automatic decoder: H264 -> d3d11h264dec (NVIDIA unavailable; Direct3D11 available; software available)
+AirGlass automatic decoder: HEVC -> d3d11h265dec (NVIDIA unavailable; Direct3D11 available; software available)
+AirGlass decoder: avdec_h264 (software)
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoded format: video/x-raw, format=(string)I420, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, pixel-aspect-ratio=(fraction)1/1, chroma-site=(string)mpeg2, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.3 decode-ms=2.03 processing-ms=2.09 present-ms=14.22 pacing-ms=11.04 jitter-ms=1.98 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Auto actual software renderer, adaptive pacing, decode=2.03 ms input-to-Present=14.22 ms pacing=11.04 ms GPU queue=1
+
+
+auto-software
+=============
+AirGlass automatic decoder: H264 -> avdec_h264 (NVIDIA unavailable; Direct3D11 unavailable; software available)
+AirGlass automatic decoder: HEVC -> avdec_h265 (NVIDIA unavailable; Direct3D11 unavailable; software available)
+AirGlass renderer: Direct3D11 GPU conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: immediate display; ceiling=0.00 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoder: avdec_h264 (software)
+AirGlass decoded format: video/x-raw, format=(string)I420, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, pixel-aspect-ratio=(fraction)1/1, chroma-site=(string)mpeg2, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.4 decode-ms=2.56 processing-ms=2.79 present-ms=3.16 pacing-ms=0.00 jitter-ms=0.00 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Auto actual hardware renderer, immediate, decode=2.56 ms input-to-Present=3.16 ms pacing=0.00 ms GPU queue=1
+AirGlass automatic decoder: H264 -> avdec_h264 (NVIDIA unavailable; Direct3D11 unavailable; software available)
+AirGlass automatic decoder: HEVC -> avdec_h265 (NVIDIA unavailable; Direct3D11 unavailable; software available)
+AirGlass renderer: Direct3D11 GPU conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoder: avdec_h264 (software)
+AirGlass decoded format: video/x-raw, format=(string)I420, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, pixel-aspect-ratio=(fraction)1/1, chroma-site=(string)mpeg2, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=60.0 decode-ms=2.23 processing-ms=3.03 present-ms=18.18 pacing-ms=14.93 jitter-ms=2.04 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Auto actual hardware renderer, adaptive pacing, decode=2.23 ms input-to-Present=18.18 ms pacing=14.93 ms GPU queue=1
+AirGlass automatic decoder: H264 -> avdec_h264 (NVIDIA unavailable; Direct3D11 unavailable; software available)
+AirGlass automatic decoder: HEVC -> avdec_h265 (NVIDIA unavailable; Direct3D11 unavailable; software available)
+AirGlass decoder: avdec_h264 (software)
+AirGlass renderer: CPU compatibility conversion/display; encoded queue=1; decoded queue=latest frame
+AirGlass pacing: adaptive after decode; ceiling=16.67 ms
+Begin streaming to GStreamer video pipeline
+AirGlass decoded format: video/x-raw, format=(string)I420, width=(int)1920, height=(int)1080, interlace-mode=(string)progressive, pixel-aspect-ratio=(fraction)1/1, chroma-site=(string)mpeg2, colorimetry=(string)bt709, framerate=(fraction)60/1
+AirGlass GPU queue: maximum=1 previous=3
+AirGlass metrics: rendered-fps=59.3 decode-ms=1.96 processing-ms=1.97 present-ms=13.42 pacing-ms=10.39 jitter-ms=2.03 late-dropped=0 unmatched=0
+PASS: 1920x1080@60 H264 Auto actual software renderer, adaptive pacing, decode=1.96 ms input-to-Present=13.42 ms pacing=10.39 ms GPU queue=1
+
+
+dependency-audit
+================
+PASS: 149 engine PE files; all static imports resolve from bundled bin, Windows System32 or Windows API sets.
+Clean PATH excludes MSYS2, Python and CUDA Toolkit.
+Bonjour and NVIDIA driver dynamic dependencies remain external and are documented.
+

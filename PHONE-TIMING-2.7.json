@@ -1,0 +1,24 @@
+{
+  "before": {
+    "reports": 8,
+    "decode_stage_ms_median": 192.34,
+    "decode_stage_ms_range": [
+      178.18,
+      236.74
+    ],
+    "receiver_to_presentation_ms_median": 197.82,
+    "late_drops_in_reports": 21
+  },
+  "after": {
+    "reports": 19,
+    "decode_stage_ms_median": 0.34,
+    "decode_stage_ms_range": [
+      0.27,
+      4.83
+    ],
+    "receiver_to_presentation_ms_median": 22.63,
+    "late_drops_in_reports": 0
+  },
+  "scope": "Same PC and iPhone, separate sessions at 1080p request / 30-fps ceiling, portrait H264. Not a controlled identical-content benchmark. Decode-stage time includes receiver buffering. Presentation time ends before GPU completion and display scanout; excludes phone and network.",
+  "user_feedback": "More responsive and smooth"
+}
