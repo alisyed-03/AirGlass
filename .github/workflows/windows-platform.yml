@@ -1,0 +1,14 @@
+name: Windows platform compatibility
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  platform-checks:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test Windows and ARM compatibility checks
+        shell: powershell
+        run: .\source\platform_test.ps1

@@ -10,6 +10,8 @@ Download **AirGlass-Setup-2.7.1.exe** from this repository's Releases page and r
 
 The setup EXE is unsigned. The portable ZIP below remains available.
 
+Windows 11 ARM64 installation is enabled by the installer built from this source. Previously published installers are unchanged; see [Windows ARM compatibility](WINDOWS-ARM.md).
+
 ## Portable download and run
 
 1. Open this repository's **Releases** page and download **AirGlass-Windows.zip**. GitHub's automatic “Source code” downloads are for building the project and do not include the runnable engine/runtime.
@@ -56,7 +58,7 @@ NVIDIA support does **not** require the full CUDA Toolkit. Required application 
 
 ## Requirements
 
-- **Windows 10/11, x64**, with a working Direct3D11 display/driver. This release is not a macOS, Linux or Windows ARM-native build.
+- **Windows 10/11 x64, or Windows 11 ARM64 using x64 emulation**, with a working Direct3D11 display/driver. Windows 10 on ARM is unsupported. The app and bundled runtime remain x64; see [Windows ARM compatibility](WINDOWS-ARM.md) for prerequisites and validation status.
 - **[.NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-framework/net48)** or later compatible .NET Framework. The modern .NET runtime alone does not replace .NET Framework.
 - **Apple Bonjour Service**, installed and running. Apple's [Bonjour developer page](https://developer.apple.com/bonjour/) links Bonjour Print Services for Windows. Install Bonjour from Apple, then reopen AirGlass. The app displays setup guidance if Bonjour is absent; it does not silently install system software.
 - An iPhone capable of AirPlay Screen Mirroring, on a local network that permits device discovery.

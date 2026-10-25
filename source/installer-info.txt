@@ -1,4 +1,4 @@
-AirGlass 2.7.1 for Windows 10/11 x64
+AirGlass 2.7.1 for Windows 10/11 x64 and Windows 11 ARM64 (x64 emulation)
 
 Setup installs the complete application and an uninstaller for your Windows account. A Start menu shortcut is included; a desktop shortcut is optional.
 
@@ -9,3 +9,5 @@ Keep the iPhone and PC on the same local network. Allow the receiver through Win
 The app's own code is GPL-3.0-or-later. Bundled third-party components retain their own terms, including the separate NVIDIA NVRTC license included in the licenses folder.
 
 Uninstall removes installed application files and shortcuts. Your saved preferences and pairing keys in LocalAppData\AirGlass are retained.
+
+On Windows 11 ARM64, the app and bundled media engine run through x64 emulation. Keep the x64 runtime and x64 Bonjour components together. Windows 10 ARM is unsupported. ARM hardware validation is pending; see WINDOWS-ARM.md.
