@@ -8,7 +8,20 @@ An AirPlay screen-mirroring receiver for Windows. Show your iPhone screen on you
 
 Download **AirGlass-Setup-2.7.2.exe** from this repository's Releases page and run it. Setup installs the complete app for your Windows account, adds a Start menu shortcut, offers a desktop shortcut, and includes an uninstaller in Windows Settings → Apps. Setup checks for .NET Framework 4.8 before installing. If Apple Bonjour is missing, the finish page offers Apple's official download page; install Bonjour before using AirGlass. Neither prerequisite is silently bundled or installed. Your saved preferences and pairing keys are retained when you uninstall.
 
-The setup EXE is unsigned. The portable ZIP below remains available.
+### Windows security warning (unsigned installer)
+
+> **AirGlass is currently unsigned.** Windows may show **“Windows protected your PC”** or **“Unknown publisher”** when you open the installer. This means Windows cannot verify the publisher; it is not a guarantee that the file is safe or unsafe.
+
+If you trust AirGlass and want to continue:
+
+1. Download the installer only from [this repository’s official Releases page](https://github.com/alisyed-03/AirGlass/releases).
+2. Check its SHA-256 against the matching `.sha256.txt` file attached to the same release. In PowerShell, run `Get-FileHash .\AirGlass-Setup-2.7.2.exe -Algorithm SHA256` and compare the hash.
+3. In the **“Windows protected your PC”** dialog, choose **More info**, then **Run anyway**, if that option is available.
+
+If **Run anyway** is unavailable, your device’s security settings or organization policy may block unsigned apps. Contact your administrator on a managed device. Do not disable Microsoft Defender, SmartScreen or Smart App Control to install AirGlass. If antivirus reports a specific malware detection, stop and investigate rather than treating it as the unsigned-publisher notice.
+
+The portable ZIP remains available, but its unsigned app may show the same warning.
+
 
 Version 2.7.2 includes the updated installer and portable package for Windows 11 ARM64 x64 emulation; see [Windows ARM compatibility](WINDOWS-ARM.md).
 
