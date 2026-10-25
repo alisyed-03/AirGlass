@@ -100,7 +100,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\source\build-native.ps1 -M
 
 The native source builds for generic x64 with `NO_MARCH_NATIVE=ON`. The release used GStreamer SDK 1.28.8 and the bundled 1.26.2 runtime. Replacing SDK/runtime versions requires retesting. Native integration tests are available with CMake `-DAIRGLASS_BUILD_TESTS=ON`. UI self-tests: `AirGlass.exe --self-test C:\Temp\AirGlass-QA`; protocol tests require Python and are in `source/protocol_test.py`. Close the normal app before tests using its ports.
 
-## Update in 2.7.2
+## Update in 2.7.1
 
 A notice beneath the connection steps says: “If AirGlass doesn’t appear in Screen Mirroring, click Stop receiver, then Start receiver, and try again.” The 2.7 video and discovery behavior is retained.
 
@@ -116,7 +116,7 @@ The same receiver object is tested through eight name-preserving settings restar
 
 ## Validation and limitations
 
-Version **2.7.2** was tested on Windows with an RTX 3060 Ti. Tests cover actual 1080p/60 H.264 and HEVC decoding/rendering, simulated missing codec capabilities, CPU fallback, settings persistence, receiver startup, protocol advertisement and Bonjour discovery. Earlier portability checks also tested a relocated folder containing spaces and a non-ASCII character, with development tools removed from PATH. Bundled PE imports were checked for missing runtime dependencies. See `TEST-RESULTS.txt`.
+Version **2.7.1** was tested on Windows with an RTX 3060 Ti. Version **2.7.2** updates packaging and Windows ARM compatibility; automated platform and x64 install/uninstall checks cover the new packaging, while physical ARM64 streaming tests remain pending. Tests cover actual 1080p/60 H.264 and HEVC decoding/rendering, simulated missing codec capabilities, CPU fallback, settings persistence, receiver startup, protocol advertisement and Bonjour discovery. Earlier portability checks also tested a relocated folder containing spaces and a non-ASCII character, with development tools removed from PATH. Bundled PE imports were checked for missing runtime dependencies. See `TEST-RESULTS.txt`.
 
 Fallback capability tests are simulations on the same PC; they do not replace physical Intel/AMD/older NVIDIA or clean Windows installations. End-to-end iPhone latency and universal hardware compatibility are not guaranteed. Network isolation, unsupported drivers and missing prerequisites can still prevent operation.
 
