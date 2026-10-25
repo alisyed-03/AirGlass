@@ -1,0 +1,99 @@
+name: Build and publish Windows release
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/release.yml']
+permissions:
+  contents: write
+concurrency:
+  group: windows-release
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: windows-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test platform support
+        shell: powershell
+        run: .\source\platform_test.ps1
+      - name: Prepare complete release payload
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $zip = Join-Path $env:RUNNER_TEMP 'runtime.zip'
+          gh release download v2.7.1 --repo $env:GITHUB_REPOSITORY --pattern AirGlass-Windows-portable.zip --output $zip
+          if ($LASTEXITCODE) { throw 'Runtime download failed.' }
+          if ((Get-FileHash $zip -Algorithm SHA256).Hash -ne '4162ddca75b92a9e2e91f811853159a5837934001aeae0c376e10799eea88ef9') { throw 'Runtime checksum mismatch.' }
+          $unpack = Join-Path $env:RUNNER_TEMP 'runtime'
+          Expand-Archive $zip $unpack
+          $engines = @(Get-ChildItem $unpack -Recurse -Filter uxplay.exe | Where-Object { $_.FullName -match '\\engine\\bin\\uxplay.exe$' })
+          if ($engines.Count -ne 1) { throw 'Expected exactly one complete media runtime.' }
+          $oldRoot = Split-Path (Split-Path (Split-Path $engines[0].FullName))
+          $payload = Join-Path $env:RUNNER_TEMP 'AirGlass'
+          New-Item $payload -ItemType Directory | Out-Null
+          Copy-Item "$oldRoot\*" $payload -Recurse -Force
+          foreach ($file in (git ls-files)) {
+            if ($file.StartsWith('.github/')) { continue }
+            $target = Join-Path $payload $file
+            New-Item (Split-Path $target) -ItemType Directory -Force | Out-Null
+            Copy-Item -LiteralPath $file -Destination $target -Force
+          }
+          "PAYLOAD=$payload" >> $env:GITHUB_ENV
+          & "$payload\source\build.ps1"
+          if (!(Test-Path "$payload\engine\lib\gstreamer-1.0\libgstlibav.dll")) { throw 'Incomplete media runtime.' }
+          if ((Get-Item "$payload\AirGlass.exe").VersionInfo.FileVersion -ne '2.7.2.0') { throw 'Incorrect application version.' }
+      - name: Build installer
+        shell: powershell
+        run: |
+          choco upgrade innosetup -y --no-progress
+          if ($LASTEXITCODE) { throw 'Inno Setup installation failed.' }
+          $compiler = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          & "$env:PAYLOAD\source\build-installer.ps1" -Compiler $compiler
+      - name: Verify silent installation and uninstall
+        shell: powershell
+        run: |
+          $installer = Join-Path $env:RUNNER_TEMP 'AirGlass-Setup-2.7.2.exe'
+          $target = Join-Path $env:RUNNER_TEMP 'Install QA spaced folder'
+          $process = Start-Process $installer -ArgumentList @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', ('/DIR="' + $target + '"')) -PassThru -Wait
+          if ($process.ExitCode -ne 0) { throw "Installer failed: $($process.ExitCode)" }
+          foreach ($file in @('AirGlass.exe', 'Platform-Support.ps1', 'Check-Setup.ps1', 'WINDOWS-ARM.md', 'engine\bin\uxplay.exe')) {
+            if ((Get-FileHash "$target\$file").Hash -ne (Get-FileHash "$env:PAYLOAD\$file").Hash) { throw "Installed payload mismatch: $file" }
+          }
+          $process = Start-Process "$target\unins000.exe" -ArgumentList '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART' -PassThru -Wait
+          if ($process.ExitCode -ne 0 -or (Test-Path "$target\AirGlass.exe")) { throw 'Uninstall failed.' }
+      - name: Package downloads and checksums
+        shell: powershell
+        run: |
+          $out = Join-Path $env:RUNNER_TEMP 'downloads'
+          New-Item $out -ItemType Directory | Out-Null
+          Copy-Item "$env:RUNNER_TEMP\AirGlass-Setup-2.7.2.exe" $out
+          Compress-Archive -Path "$env:PAYLOAD\*" -DestinationPath "$out\AirGlass-Windows-portable.zip" -CompressionLevel Optimal
+          foreach ($file in (Get-ChildItem $out -File)) {
+            $hash = (Get-FileHash $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+            "$hash  $($file.Name)" | Set-Content ($file.FullName + '.sha256.txt') -Encoding ASCII
+          }
+          "DOWNLOADS=$out" >> $env:GITHUB_ENV
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AirGlass-2.7.2-downloads
+          path: ${{ env.DOWNLOADS }}/*
+      - name: Publish v2.7.2
+        shell: powershell
+        run: |
+          @'
+          Windows 11 ARM64 compatibility through x64 emulation, plus Windows 10/11 x64.
+
+          Download AirGlass-Setup-2.7.2.exe for installation, or extract the entire AirGlass-Windows-portable.zip. SHA-256 checksum files are included.
+
+          Updated installer architecture selection, host-aware setup diagnostics, README and ARM setup guidance. The UI is rebuilt as 2.7.2; the media runtime is unchanged from the checksum-verified 2.7.1 package.
+
+          Requires .NET Framework 4.8 or compatible later version and Apple Bonjour with x64 client DLLs. Windows 10 ARM is unsupported. This is x64 emulation compatibility, not a native ARM64 build. Physical ARM64 discovery, graphics and iPhone streaming validation remains pending. The unsigned installer passed automated install/uninstall checks on an x64 Windows runner.
+          '@ | Set-Content release-notes.txt -Encoding UTF8
+          gh release create v2.7.2 --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title 'AirGlass 2.7.2 - Windows 11 ARM compatibility' --notes-file release-notes.txt --draft
+          if ($LASTEXITCODE) { throw 'Draft release creation failed.' }
+          gh release upload v2.7.2 "$env:DOWNLOADS\*" --repo $env:GITHUB_REPOSITORY
+          if ($LASTEXITCODE) { throw 'Release asset upload failed.' }
+          gh release edit v2.7.2 --repo $env:GITHUB_REPOSITORY --draft=false --latest
+          if ($LASTEXITCODE) { throw 'Release publication failed.' }

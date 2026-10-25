@@ -6,15 +6,15 @@ An AirPlay screen-mirroring receiver for Windows. Show your iPhone screen on you
 
 ## Installer (recommended)
 
-Download **AirGlass-Setup-2.7.1.exe** from this repository's Releases page and run it. Setup installs the complete app for your Windows account, adds a Start menu shortcut, offers a desktop shortcut, and includes an uninstaller in Windows Settings → Apps. Setup checks for .NET Framework 4.8 before installing. If Apple Bonjour is missing, the finish page offers Apple's official download page; install Bonjour before using AirGlass. Neither prerequisite is silently bundled or installed. Your saved preferences and pairing keys are retained when you uninstall.
+Download **AirGlass-Setup-2.7.2.exe** from this repository's Releases page and run it. Setup installs the complete app for your Windows account, adds a Start menu shortcut, offers a desktop shortcut, and includes an uninstaller in Windows Settings → Apps. Setup checks for .NET Framework 4.8 before installing. If Apple Bonjour is missing, the finish page offers Apple's official download page; install Bonjour before using AirGlass. Neither prerequisite is silently bundled or installed. Your saved preferences and pairing keys are retained when you uninstall.
 
 The setup EXE is unsigned. The portable ZIP below remains available.
 
-Windows 11 ARM64 installation is enabled by the installer built from this source. Previously published installers are unchanged; see [Windows ARM compatibility](WINDOWS-ARM.md).
+Version 2.7.2 includes the updated installer and portable package for Windows 11 ARM64 x64 emulation; see [Windows ARM compatibility](WINDOWS-ARM.md).
 
 ## Portable download and run
 
-1. Open this repository's **Releases** page and download **AirGlass-Windows.zip**. GitHub's automatic “Source code” downloads are for building the project and do not include the runnable engine/runtime.
+1. Open this repository's **Releases** page and download **AirGlass-Windows-portable.zip**. GitHub's automatic “Source code” downloads are for building the project and do not include the runnable engine/runtime.
 2. Extract the **entire ZIP** to a folder you can write to. Keep `AirGlass.exe`, `engine`, `assets` and the license files together. Do not run the EXE from inside the ZIP or copy only the EXE.
 3. Install **.NET Framework 4.8** and **Apple Bonjour** if they are missing; see Requirements below.
 4. Open **AirGlass.exe**. The receiver starts automatically.
@@ -100,7 +100,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\source\build-native.ps1 -M
 
 The native source builds for generic x64 with `NO_MARCH_NATIVE=ON`. The release used GStreamer SDK 1.28.8 and the bundled 1.26.2 runtime. Replacing SDK/runtime versions requires retesting. Native integration tests are available with CMake `-DAIRGLASS_BUILD_TESTS=ON`. UI self-tests: `AirGlass.exe --self-test C:\Temp\AirGlass-QA`; protocol tests require Python and are in `source/protocol_test.py`. Close the normal app before tests using its ports.
 
-## Update in 2.7.1
+## Update in 2.7.2
 
 A notice beneath the connection steps says: “If AirGlass doesn’t appear in Screen Mirroring, click Stop receiver, then Start receiver, and try again.” The 2.7 video and discovery behavior is retained.
 
@@ -116,7 +116,7 @@ The same receiver object is tested through eight name-preserving settings restar
 
 ## Validation and limitations
 
-Version **2.7.1** was tested on Windows with an RTX 3060 Ti. Tests cover actual 1080p/60 H.264 and HEVC decoding/rendering, simulated missing codec capabilities, CPU fallback, settings persistence, receiver startup, protocol advertisement and Bonjour discovery. Earlier portability checks also tested a relocated folder containing spaces and a non-ASCII character, with development tools removed from PATH. Bundled PE imports were checked for missing runtime dependencies. See `TEST-RESULTS.txt`.
+Version **2.7.2** was tested on Windows with an RTX 3060 Ti. Tests cover actual 1080p/60 H.264 and HEVC decoding/rendering, simulated missing codec capabilities, CPU fallback, settings persistence, receiver startup, protocol advertisement and Bonjour discovery. Earlier portability checks also tested a relocated folder containing spaces and a non-ASCII character, with development tools removed from PATH. Bundled PE imports were checked for missing runtime dependencies. See `TEST-RESULTS.txt`.
 
 Fallback capability tests are simulations on the same PC; they do not replace physical Intel/AMD/older NVIDIA or clean Windows installations. End-to-end iPhone latency and universal hardware compatibility are not guaranteed. Network isolation, unsupported drivers and missing prerequisites can still prevent operation.
 

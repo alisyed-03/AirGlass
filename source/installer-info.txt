@@ -1,4 +1,4 @@
-AirGlass 2.7.1 for Windows 10/11 x64 and Windows 11 ARM64 (x64 emulation)
+AirGlass 2.7.2 for Windows 10/11 x64 and Windows 11 ARM64 (x64 emulation)
 
 Setup installs the complete application and an uninstaller for your Windows account. A Start menu shortcut is included; a desktop shortcut is optional.
 

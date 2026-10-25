@@ -7,8 +7,8 @@ Windows are unsupported.
 
 ## Install and run
 
-1. Use an installer rebuilt from this source, or extract the complete portable
-   `AirGlass-Windows.zip`. Previously published installers are unchanged.
+1. Download `AirGlass-Setup-2.7.2.exe` or extract the complete portable
+   `AirGlass-Windows-portable.zip` from release v2.7.2 or later.
 2. Install .NET Framework 4.8 or a compatible later version and Apple's Bonjour
    Service, including its **x64 client DLLs**. An ARM64 or x86-only Bonjour DLL
    cannot be loaded into the x64 receiver. Keep Apple's components from its
