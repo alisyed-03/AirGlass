@@ -16,8 +16,9 @@ AppPublisher=AirGlass Project
 DefaultDirName={localappdata}\Programs\AirGlass
 DefaultGroupName=AirGlass
 PrivilegesRequired=lowest
-ArchitecturesAllowed=x64os
-ArchitecturesInstallIn64BitMode=x64os
+; x64compatible includes Windows 11 ARM64 with x64 emulation.
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
 MinVersion=10.0
 OutputDir={#InstallerOutput}
 OutputBaseFilename=AirGlass-Setup-2.7.1

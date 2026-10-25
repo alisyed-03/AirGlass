@@ -1,6 +1,6 @@
 # AirGlass 2.7 installer
 
-`AirGlass-Setup-2.7.1.exe` is a complete per-user Windows 10/11 x64 installer. It installs the full app under LocalAppData/Programs/AirGlass by default, creates a Start menu shortcut, offers a desktop shortcut, and provides a Windows Apps uninstall entry. An existing AirGlass process must close before setup proceeds.
+`AirGlass-Setup-2.7.1.exe` is a complete per-user Windows installer. Rebuilt setup accepts Windows 10/11 x64 and Windows 11 ARM64 through x64 emulation (`x64compatible`); Windows 10 ARM is rejected. Existing published setup binaries are unchanged. See `WINDOWS-ARM.md` for ARM validation status. It installs the full app under LocalAppData/Programs/AirGlass by default, creates a Start menu shortcut, offers a desktop shortcut, and provides a Windows Apps uninstall entry. An existing AirGlass process must close before setup proceeds.
 
 Setup checks .NET Framework 4.8 before installation. If absent, interactive setup offers the official Microsoft page and stops without installing. Bonjour is not redistributed: if absent, setup explains the requirement and offers Apple's official download page on completion. Silent setup never opens a website or launches the app. Missing-prerequisite branches were inspected in source; they were not exercised by removing system prerequisites from this PC.
 
