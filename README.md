@@ -100,6 +100,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\source\build-native.ps1 -M
 
 The native source builds for generic x64 with `NO_MARCH_NATIVE=ON`. The release used GStreamer SDK 1.28.8 and the bundled 1.26.2 runtime. Replacing SDK/runtime versions requires retesting. Native integration tests are available with CMake `-DAIRGLASS_BUILD_TESTS=ON`. UI self-tests: `AirGlass.exe --self-test C:\Temp\AirGlass-QA`; protocol tests require Python and are in `source/protocol_test.py`. Close the normal app before tests using its ports.
 
+## Update in 2.7.2
+
+- Added installer compatibility for **Windows 11 ARM64 through x64 emulation**. Windows 10/11 x64 remains supported; Windows 10 ARM is unsupported.
+- Updated setup diagnostics to detect the host architecture and check the 64-bit .NET Framework registry view.
+- Published the rebuilt **AirGlass-Setup-2.7.2.exe**, complete portable ZIP and SHA-256 checksums on the [v2.7.2 release page](https://github.com/alisyed-03/AirGlass/releases/tag/v2.7.2).
+- Added [Windows ARM setup guidance](WINDOWS-ARM.md), including x64 Bonjour requirements and decoder troubleshooting.
+- Automated platform checks and x64 installer install/uninstall tests passed. The app and media runtime remain x64; physical ARM64 discovery and iPhone streaming tests are still pending.
+
 ## Update in 2.7.1
 
 A notice beneath the connection steps says: “If AirGlass doesn’t appear in Screen Mirroring, click Stop receiver, then Start receiver, and try again.” The 2.7 video and discovery behavior is retained.
