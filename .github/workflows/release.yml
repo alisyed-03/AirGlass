@@ -91,8 +91,9 @@ jobs:
 
           Requires .NET Framework 4.8 or compatible later version and Apple Bonjour with x64 client DLLs. Windows 10 ARM is unsupported. This is x64 emulation compatibility, not a native ARM64 build. Physical ARM64 discovery, graphics and iPhone streaming validation remains pending. The unsigned installer passed automated install/uninstall checks on an x64 Windows runner.
           '@ | Set-Content release-notes.txt -Encoding UTF8
-          gh release view v2.7.2 --repo $env:GITHUB_REPOSITORY 2>$null
-          if ($LASTEXITCODE -eq 0) {
+          $releases = gh release list --repo $env:GITHUB_REPOSITORY --json tagName --limit 100 | ConvertFrom-Json
+          if ($LASTEXITCODE) { throw 'Cannot inspect releases.' }
+          if (@($releases | Where-Object { $_.tagName -eq 'v2.7.2' }).Count -gt 0) {
             gh release edit v2.7.2 --repo $env:GITHUB_REPOSITORY --notes-file release-notes.txt --draft=true
           } else {
             gh release create v2.7.2 --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title 'AirGlass 2.7.2 - Windows 11 ARM compatibility' --notes-file release-notes.txt --draft
