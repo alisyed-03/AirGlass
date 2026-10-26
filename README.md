@@ -6,7 +6,7 @@ An AirPlay screen-mirroring receiver for Windows. Show your iPhone screen on you
 
 ## Installer (recommended)
 
-Download **AirGlass-Setup-2.7.2.exe** from this repository's Releases page and run it. Setup installs the complete app for your Windows account, adds a Start menu shortcut, offers a desktop shortcut, and includes an uninstaller in Windows Settings → Apps. Setup checks for .NET Framework 4.8 before installing. If Apple Bonjour is missing, the finish page offers Apple's official download page; install Bonjour before using AirGlass. Neither prerequisite is silently bundled or installed. Your saved preferences and pairing keys are retained when you uninstall.
+Download **AirGlass-Setup-2.7.2.exe** from this repository's Releases page and run it. Setup installs the complete app for your Windows account, adds a Start menu shortcut, offers a desktop shortcut, and includes an uninstaller in Windows Settings → Apps. Setup checks for .NET Framework 4.8 before installing. If Apple Bonjour is missing, [download Bonjour Print Services for Windows from Apple](https://support.apple.com/106380), or use the official download link on the finish page; install Bonjour before using AirGlass. Neither prerequisite is silently bundled or installed. Your saved preferences and pairing keys are retained when you uninstall.
 
 ### Windows security warning (unsigned installer)
 
@@ -29,7 +29,7 @@ Version 2.7.2 includes the updated installer and portable package for Windows 11
 
 1. Open this repository's **Releases** page and download **AirGlass-Windows-portable.zip**. GitHub's automatic “Source code” downloads are for building the project and do not include the runnable engine/runtime.
 2. Extract the **entire ZIP** to a folder you can write to. Keep `AirGlass.exe`, `engine`, `assets` and the license files together. Do not run the EXE from inside the ZIP or copy only the EXE.
-3. Install **.NET Framework 4.8** and **Apple Bonjour** if they are missing; see Requirements below.
+3. Install **.NET Framework 4.8** and **[Apple Bonjour](https://support.apple.com/106380)** if they are missing; see Requirements below.
 4. Open **AirGlass.exe**. The receiver starts automatically.
 5. Put your iPhone and PC on the same local network. On iPhone, open **Control Center → Screen Mirroring → AirGlass**.
 6. If Windows Firewall asks, allow the receiver on your trusted private/home network.
@@ -73,7 +73,7 @@ NVIDIA support does **not** require the full CUDA Toolkit. Required application 
 
 - **Windows 10/11 x64, or Windows 11 ARM64 using x64 emulation**, with a working Direct3D11 display/driver. Windows 10 on ARM is unsupported. The app and bundled runtime remain x64; see [Windows ARM compatibility](WINDOWS-ARM.md) for prerequisites and validation status.
 - **[.NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-framework/net48)** or later compatible .NET Framework. The modern .NET runtime alone does not replace .NET Framework.
-- **Apple Bonjour Service**, installed and running. Apple's [Bonjour developer page](https://developer.apple.com/bonjour/) links Bonjour Print Services for Windows. Install Bonjour from Apple, then reopen AirGlass. The app displays setup guidance if Bonjour is absent; it does not silently install system software.
+- **Apple Bonjour Service**, installed and running. [Download Bonjour Print Services for Windows from Apple](https://support.apple.com/106380). Run `BonjourPSSetup.exe`, follow the installer prompts, then reopen AirGlass. The app displays setup guidance if Bonjour is absent; it does not silently install system software.
 - An iPhone capable of AirPlay Screen Mirroring, on a local network that permits device discovery.
 
 You do not need Python, MSYS2, GStreamer, a compiler, the CUDA Toolkit or the developer's folders to run the complete release. No receiver keys, saved PC-specific settings, IP addresses or plugin caches are shipped. Extract portable updates into a fresh folder; installer updates remove the older always-scanned NVIDIA plugin. Each user gets their own settings and keys under `%LOCALAPPDATA%\AirGlass`; the install folder does not store runtime preferences.
