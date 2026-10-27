@@ -24,8 +24,8 @@ using System.Windows.Threading;
 [assembly: AssemblyDescription("AirPlay screen receiver for Windows")]
 [assembly: AssemblyProduct("AirGlass")]
 [assembly: AssemblyCompany("Ali Syed")]
-[assembly: AssemblyVersion("2.7.2.0")]
-[assembly: AssemblyFileVersion("2.7.2.0")]
+[assembly: AssemblyVersion("2.7.3.0")]
+[assembly: AssemblyFileVersion("2.7.3.0")]
 
 namespace AirGlass {
  [DataContract] public class Settings {

@@ -10,8 +10,8 @@
 [Setup]
 AppId={{C24FAED9-F1B9-46A7-905D-45D6C2AD58CC}
 AppName=AirGlass
-AppVersion=2.7.2
-AppVerName=AirGlass 2.7.2
+AppVersion=2.7.3
+AppVerName=AirGlass 2.7.3
 AppPublisher=Ali Syed
 DefaultDirName={localappdata}\Programs\AirGlass
 DefaultGroupName=AirGlass
@@ -21,7 +21,7 @@ ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 MinVersion=10.0
 OutputDir={#InstallerOutput}
-OutputBaseFilename=AirGlass-Setup-2.7.2
+OutputBaseFilename=AirGlass-Setup-2.7.3
 SetupIconFile={#AppRoot}\assets\AirGlass.ico
 UninstallDisplayIcon={app}\AirGlass.exe
 LicenseFile={#AppRoot}\LICENSE.txt
@@ -34,7 +34,7 @@ CloseApplications=yes
 RestartApplications=no
 AppMutex=Local\AirGlass.Receiver
 UninstallDisplayName=AirGlass
-VersionInfoVersion=2.7.2.0
+VersionInfoVersion=2.7.3.0
 VersionInfoDescription=AirGlass installer
 DisableProgramGroupPage=yes
 ChangesAssociations=no
@@ -54,7 +54,7 @@ Name: "{group}\AirGlass README"; Filename: "{app}\README.md"
 Name: "{autodesktop}\AirGlass"; Filename: "{app}\AirGlass.exe"; WorkingDir: "{app}"; Tasks: desktopicon
 
 [Run]
-Filename: "https://developer.apple.com/bonjour/"; Description: "Open Apple's Bonjour download page (required for iPhone discovery)"; Flags: postinstall shellexec skipifsilent; Check: not BonjourInstalled
+Filename: "https://support.apple.com/106380"; Description: "Open Apple's Bonjour download page (required for iPhone discovery)"; Flags: postinstall shellexec skipifsilent; Check: not BonjourInstalled
 Filename: "{app}\AirGlass.exe"; Description: "Open AirGlass"; WorkingDir: "{app}"; Flags: postinstall nowait skipifsilent; Check: BonjourInstalled
 
 [Code]

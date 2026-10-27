@@ -6,7 +6,7 @@ An AirPlay screen-mirroring receiver for Windows. Show your iPhone screen on you
 
 ## Installer (recommended)
 
-Download **AirGlass-Setup-2.7.2.exe** from this repository's Releases page and run it. Setup installs the complete app for your Windows account, adds a Start menu shortcut, offers a desktop shortcut, and includes an uninstaller in Windows Settings → Apps. Setup checks for .NET Framework 4.8 before installing. If Apple Bonjour is missing, [download Bonjour Print Services for Windows from Apple](https://support.apple.com/106380), or use the official download link on the finish page; install Bonjour before using AirGlass. Neither prerequisite is silently bundled or installed. Your saved preferences and pairing keys are retained when you uninstall.
+Download **AirGlass-Setup-2.7.3.exe** from this repository's Releases page and run it. Setup installs the complete app for your Windows account, adds a Start menu shortcut, offers a desktop shortcut, and includes an uninstaller in Windows Settings → Apps. Setup checks for .NET Framework 4.8 before installing. If Apple Bonjour is missing, [download Bonjour Print Services for Windows from Apple](https://support.apple.com/106380), or use the official download link on the finish page; install Bonjour before using AirGlass. Neither prerequisite is silently bundled or installed. Your saved preferences and pairing keys are retained when you uninstall.
 
 ### Windows security warning (unsigned installer)
 
@@ -15,7 +15,7 @@ Download **AirGlass-Setup-2.7.2.exe** from this repository's Releases page and r
 If you trust AirGlass and want to continue:
 
 1. Download the installer only from [this repository’s official Releases page](https://github.com/alisyed-03/AirGlass/releases).
-2. Check its SHA-256 against the matching `.sha256.txt` file attached to the same release. In PowerShell, run `Get-FileHash .\AirGlass-Setup-2.7.2.exe -Algorithm SHA256` and compare the hash.
+2. Check its SHA-256 against the matching `.sha256.txt` file attached to the same release. In PowerShell, run `Get-FileHash .\AirGlass-Setup-2.7.3.exe -Algorithm SHA256` and compare the hash.
 3. In the **“Windows protected your PC”** dialog, choose **More info**, then **Run anyway**, if that option is available.
 
 If **Run anyway** is unavailable, your device’s security settings or organization policy may block unsigned apps. Contact your administrator on a managed device. Do not disable Microsoft Defender, SmartScreen or Smart App Control to install AirGlass. If antivirus reports a specific malware detection, stop and investigate rather than treating it as the unsigned-publisher notice.
@@ -23,7 +23,7 @@ If **Run anyway** is unavailable, your device’s security settings or organizat
 The portable ZIP remains available, but its unsigned app may show the same warning.
 
 
-Version 2.7.2 includes the updated installer and portable package for Windows 11 ARM64 x64 emulation; see [Windows ARM compatibility](WINDOWS-ARM.md).
+Version 2.7.3 includes the updated installer and portable package for Windows 11 ARM64 x64 emulation; see [Windows ARM compatibility](WINDOWS-ARM.md).
 
 ## Portable download and run
 
@@ -53,13 +53,13 @@ The main panel contains Receiver name, Resolution, Maximum frame rate and Perfor
 
 Use **Save & restart receiver** after making changes, then reconnect from the iPhone. Normal Stop/restart withdraws the Bonjour services, waits for the local removal event, keeps the same available port block and allows a one-second quiet interval before replacement; forced termination is reserved for an unresponsive process. “Ready” waits for the registration callback, a local Bonjour browse result and the TCP listener. Saving unchanged settings keeps the active receiver running. Unconfirmed discovery receives one bounded automatic retry.
 
-## Adaptive quality (source build)
+## Adaptive quality
 
 Select **Best latency**, enable **Adaptive quality**, then **Save & restart receiver**. Your selected resolution and FPS remain the saved maximum. While video is arriving, sustained receiver delay above 150 ms or jitter above 40 ms for eight seconds triggers a lower request: 60 → 30 fps, then one resolution step at a time down to 720p, then 15 fps. A lower maximum such as 480p is retained. Startup has a 20-second grace period; further adjustments have at least a 60-second cooldown. Missing telemetry and static screens do not trigger adaptation. Best picture does not expose the required native timing data, so adaptive mode is disabled for that preference.
 
 **Each adjustment restarts the receiver and may disconnect mirroring. Reconnect from Control Center → Screen Mirroring when prompted.** Quality stays reduced for that receiver session; manually Stop/Start to retry your saved maximum. It does not automatically raise quality and interrupt a stable stream. Disable the option to keep manual quality control.
 
-This uses local receiver delay and jitter as feedback, not an internet speed test. PC decoding load can also trigger it, and it cannot detect every Wi-Fi problem. Resolution/FPS are requests to the iPhone, not guaranteed output. The feature is available in source builds and is not included in the published v2.7.2 downloads yet.
+This uses local receiver delay and jitter as feedback, not an internet speed test. PC decoding load can also trigger it, and it cannot detect every Wi-Fi problem. Resolution/FPS are requests to the iPhone, not guaranteed output. Available in version 2.7.3 and later.
 
 ## Automatic GPU decoding
 
@@ -120,6 +120,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\source\build-native.ps1 -M
 ```
 
 The native source builds for generic x64 with `NO_MARCH_NATIVE=ON`. The release used GStreamer SDK 1.28.8 and the bundled 1.26.2 runtime. Replacing SDK/runtime versions requires retesting. Native integration tests are available with CMake `-DAIRGLASS_BUILD_TESTS=ON`. UI self-tests: `AirGlass.exe --self-test C:\Temp\AirGlass-QA`; protocol tests require Python and are in `source/protocol_test.py`. Close the normal app before tests using its ports.
+
+## Update in 2.7.3
+
+- Added opt-in **Adaptive quality** for **Best latency**. Sustained receiver delay or jitter lowers the session's FPS or resolution request, with startup grace and cooldowns to avoid rapid changes.
+- Your selected maximum quality stays saved. Manual Stop/Start restores it; adaptive mode does not automatically increase quality during a stable session.
+- **Quality adjustments restart the receiver and may require reconnecting Screen Mirroring on your iPhone. Seamless midstream bitrate/resolution switching is not implemented.**
+- Added regression tests for adaptation timing, native telemetry cadence, quality bounds and settings persistence. Windows build, startup recovery and installer checks run before publication; end-to-end iPhone adaptation still needs device testing.
+- Updated installer and portable downloads with SHA-256 checksums on the [v2.7.3 release page](https://github.com/alisyed-03/AirGlass/releases/tag/v2.7.3).
 
 ## Update in 2.7.2
 

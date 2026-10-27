@@ -1,4 +1,4 @@
-AirGlass 2.7.2 for Windows 10/11 x64 and Windows 11 ARM64 (x64 emulation)
+AirGlass 2.7.3 for Windows 10/11 x64 and Windows 11 ARM64 (x64 emulation)
 
 Setup installs the complete application and an uninstaller for your Windows account. A Start menu shortcut is included; a desktop shortcut is optional.
 
@@ -11,3 +11,5 @@ The app's own code is GPL-3.0-or-later. Bundled third-party components retain th
 Uninstall removes installed application files and shortcuts. Your saved preferences and pairing keys in LocalAppData\AirGlass are retained.
 
 On Windows 11 ARM64, the app and bundled media engine run through x64 emulation. Keep the x64 runtime and x64 Bonjour components together. Windows 10 ARM is unsupported. ARM hardware validation is pending; see WINDOWS-ARM.md.
+
+Adaptive quality is optional in Best latency mode. Quality reductions restart the receiver and may require reconnecting your iPhone; seamless midstream switching is not implemented.
