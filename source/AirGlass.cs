@@ -23,6 +23,7 @@ using System.Windows.Threading;
 [assembly: AssemblyTitle("AirGlass")]
 [assembly: AssemblyDescription("AirPlay screen receiver for Windows")]
 [assembly: AssemblyProduct("AirGlass")]
+[assembly: AssemblyCompany("Ali Syed")]
 [assembly: AssemblyVersion("2.7.2.0")]
 [assembly: AssemblyFileVersion("2.7.2.0")]
 
@@ -229,6 +230,15 @@ namespace AirGlass {
   public void Dispose() { Stop(); }
  }
 
+ internal static class DiscoveryStartup {
+  // Use the existing startup timeout for recovery too. Cold plugin initialization
+  // must not be interrupted by a shorter, independent discovery timer.
+  public const int TimeoutSeconds = 45;
+  public static bool ShouldRetry(double elapsedSeconds, bool ready, bool registered, bool present, bool listening, int recoveries) {
+   return !ready && recoveries < 1 && elapsedSeconds >= TimeoutSeconds && !(registered && present && listening);
+  }
+ }
+
  public sealed class Controller {
   public Window Window;
   readonly Receiver receiver;
@@ -340,13 +350,17 @@ namespace AirGlass {
     int exit = receiver.Process.ExitCode; receiver.Stop();
     State("Needs attention", "Receiver stopped unexpectedly.", failure.Length > 0 ? failure : "Exit code " + exit + ". Connection help includes the receiver log.", "Try another video decoder, then start again.", false); return;
    }
-   if (!ready && advertised && receiver.Discoverable && Native.HasListener(receiver.Process.Id)) {
+   if (ready) return; // Startup recovery must never interrupt a connected session.
+   bool present=receiver.Discoverable;
+   bool listening=Native.HasListener(receiver.Process.Id);
+   if (advertised && present && listening) {
     ready = true; State("Receiver running", "Ready for your iPhone.", "Choose the receiver below in Control Center → Screen Mirroring.", "AirPlay server listening. Waiting for your iPhone.", true);
-   } else if (!ready && !receiver.Discoverable && discoveryRecoveries<1 && (DateTime.UtcNow-receiver.Started).TotalSeconds>12) {
+   } else if (DiscoveryStartup.ShouldRetry((DateTime.UtcNow-receiver.Started).TotalSeconds,ready,advertised,present,listening,discoveryRecoveries)) {
     discoveryRecoveries++;Stop();Start(true);
-    Get<TextBlock>("SettingsFeedback").Text="Retrying AirPlay discovery after an unconfirmed announcement…";
-   } else if (!ready && (DateTime.UtcNow - receiver.Started).TotalSeconds > 45) {
-    Get<TextBlock>("MessageLabel").Text = "Startup is taking longer than expected. Connection help includes the log.";
+    // Preserve the error from Start if replacement fails.
+    if(receiver.Running)Get<TextBlock>("SettingsFeedback").Text="Retrying AirPlay discovery after an unconfirmed startup…";
+   } else if ((DateTime.UtcNow - receiver.Started).TotalSeconds >= DiscoveryStartup.TimeoutSeconds) {
+    Get<TextBlock>("MessageLabel").Text = "AirPlay startup could not be confirmed. Open Connection help to check Bonjour and the receiver log.";
    }
   }
   public static string NetworkSummary() {
@@ -425,6 +439,15 @@ namespace AirGlass {
   static int SelfTest(string root, string testRoot) {
    Directory.CreateDirectory(testRoot); var report = new StringBuilder();
    try {
+    foreach(bool registered in new bool[]{false,true})
+     foreach(bool present in new bool[]{false,true})
+      foreach(bool listening in new bool[]{false,true}) {
+       Assert(!DiscoveryStartup.ShouldRetry(12,false,registered,present,listening,0),"Do not interrupt cold initialization after 12 seconds",report);
+       Assert(!DiscoveryStartup.ShouldRetry(44.9,false,registered,present,listening,0),"Allow the full startup window",report);
+       Assert(DiscoveryStartup.ShouldRetry(45,false,registered,present,listening,0)==!(registered && present && listening),"Retry every incomplete readiness combination at the deadline",report);
+       Assert(!DiscoveryStartup.ShouldRetry(90,true,registered,present,listening,0),"Never restart an established session",report);
+       Assert(!DiscoveryStartup.ShouldRetry(90,false,registered,present,listening,1),"Keep automatic recovery bounded to one retry",report);
+      }
     var settings = new Settings(); settings.Validate();
     Assert(settings.Resolution == "1920x1080" && settings.Fps == 30, "Defaults are 1080p / 30 fps", report);
     Assert(settings.OptimizeFor == "Latency" && settings.SmoothLatency, "Best latency with smooth pacing is the default", report);
