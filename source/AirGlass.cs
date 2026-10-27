@@ -396,6 +396,7 @@ namespace AirGlass {
    string root = AppDomain.CurrentDomain.BaseDirectory;
    try {
     if (args.Length > 0 && args[0] == "--self-test") return SelfTest(root, args.Length > 1 ? args[1] : Path.Combine(root, "test-results"));
+    if (args.Length==2 && args[0]=="--startup-test") return StartupTest(args[1]);
     if (args.Length==2 && args[0]=="--restart-test") return RestartTest(root,args[1]);
     bool created;
     using (var mutex = new Mutex(true, "Local\\AirGlass.Receiver", out created)) {
@@ -436,9 +437,7 @@ namespace AirGlass {
     File.WriteAllText(Path.Combine(directory,"results.txt"),report.ToString());return 0;
    }catch(Exception ex){report.AppendLine("FAIL: "+ex);File.WriteAllText(Path.Combine(directory,"results.txt"),report.ToString());return 1;}
   }
-  static int SelfTest(string root, string testRoot) {
-   Directory.CreateDirectory(testRoot); var report = new StringBuilder();
-   try {
+  static void TestDiscoveryStartup(StringBuilder report) {
     foreach(bool registered in new bool[]{false,true})
      foreach(bool present in new bool[]{false,true})
       foreach(bool listening in new bool[]{false,true}) {
@@ -448,6 +447,16 @@ namespace AirGlass {
        Assert(!DiscoveryStartup.ShouldRetry(90,true,registered,present,listening,0),"Never restart an established session",report);
        Assert(!DiscoveryStartup.ShouldRetry(90,false,registered,present,listening,1),"Keep automatic recovery bounded to one retry",report);
       }
+  }
+  static int StartupTest(string directory) {
+   Directory.CreateDirectory(directory); var report=new StringBuilder();
+   try { TestDiscoveryStartup(report); File.WriteAllText(Path.Combine(directory,"startup-results.txt"),report.ToString()); return 0; }
+   catch(Exception ex) { File.WriteAllText(Path.Combine(directory,"startup-results.txt"),report.ToString()+ex); return 1; }
+  }
+  static int SelfTest(string root, string testRoot) {
+   Directory.CreateDirectory(testRoot); var report = new StringBuilder();
+   try {
+    TestDiscoveryStartup(report);
     var settings = new Settings(); settings.Validate();
     Assert(settings.Resolution == "1920x1080" && settings.Fps == 30, "Defaults are 1080p / 30 fps", report);
     Assert(settings.OptimizeFor == "Latency" && settings.SmoothLatency, "Best latency with smooth pacing is the default", report);
