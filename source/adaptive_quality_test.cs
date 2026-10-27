@@ -22,6 +22,9 @@ class AdaptiveQualityTest {
   Check(!policy.Observe("AirGlass metrics: rendered-fps=30 present-ms=-1 jitter-ms=0",41),"Unavailable delay");
   Check(!policy.Observe("AirGlass metrics: rendered-fps=30 present-ms=200",42),"Missing jitter");
   Check(!policy.Observe("unrelated output",43),"Unrelated telemetry");
+  policy=new AdaptiveQuality(0);
+  for(int i=20;i<28;i+=2)Check(!policy.Observe(Metric(200),i),"Native two-second metric cadence");
+  Check(policy.Observe(Metric(200),28),"Native cadence triggers after eight seconds");
   int resolution=3,fps=60;
   Check(AdaptiveQuality.Lower(ref resolution,ref fps)&&resolution==3&&fps==30,"FPS first");
   Check(AdaptiveQuality.Lower(ref resolution,ref fps)&&resolution==2&&fps==30,"Resolution step");

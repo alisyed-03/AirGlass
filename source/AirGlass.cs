@@ -308,11 +308,12 @@ namespace AirGlass {
   }
   Settings ReadControls() {
    string decoder = (string)((ComboBoxItem)Get<ComboBox>("DecoderInput").SelectedItem).Tag;
-   return new Settings { Name = Get<TextBox>("NameInput").Text.Trim(), Resolution = (string)((ComboBoxItem)Get<ComboBox>("ResolutionInput").SelectedItem).Tag, Fps = Int32.Parse((string)((ComboBoxItem)Get<ComboBox>("FpsInput").SelectedItem).Tag), Audio = Get<CheckBox>("AudioInput").IsChecked == true, Fullscreen = Get<CheckBox>("FullscreenInput").IsChecked == true, Software = decoder == "Software", DecoderMode = decoder, OptimizeFor = (string)((ComboBoxItem)Get<ComboBox>("PreferenceInput").SelectedItem).Tag, SmoothLatency = Get<CheckBox>("SmoothInput").IsChecked == true, Adaptive = Get<CheckBox>("AdaptiveInput").IsChecked == true };
+   return new Settings { Name = Get<TextBox>("NameInput").Text.Trim(), Resolution = (string)((ComboBoxItem)Get<ComboBox>("ResolutionInput").SelectedItem).Tag, Fps = Int32.Parse((string)((ComboBoxItem)Get<ComboBox>("FpsInput").SelectedItem).Tag), Audio = Get<CheckBox>("AudioInput").IsChecked == true, Fullscreen = Get<CheckBox>("FullscreenInput").IsChecked == true, Software = decoder == "Software", DecoderMode = decoder, OptimizeFor = (string)((ComboBoxItem)Get<ComboBox>("PreferenceInput").SelectedItem).Tag, SmoothLatency = Get<CheckBox>("SmoothInput").IsChecked == true, Adaptive = Get<CheckBox>("AdaptiveInput").IsChecked == true && Get<ComboBox>("PreferenceInput").SelectedIndex != 1 };
   }
   void UpdatePreferenceHint() {
    bool picture = Get<ComboBox>("PreferenceInput").SelectedIndex == 1;
    Get<CheckBox>("SmoothInput").IsEnabled = !picture;
+   Get<CheckBox>("AdaptiveInput").IsEnabled = !picture;
    int fps = new int[] {15,30,60}[Math.Max(0, Get<ComboBox>("FpsInput").SelectedIndex)];
      Get<CheckBox>("SmoothInput").ToolTip = "Adapts to recent timing variation, starting near 8 ms and capped at " + Math.Round(1000.0/fps) + " ms. Sheds temporary waiting at 4 ms per second. Turn off for immediate display.";
    Get<TextBlock>("PreferenceHint").Text = Get<ComboBox>("PreferenceInput").SelectedIndex == 1

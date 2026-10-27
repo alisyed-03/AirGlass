@@ -55,7 +55,7 @@ Use **Save & restart receiver** after making changes, then reconnect from the iP
 
 ## Adaptive quality (source build)
 
-Enable **Adaptive quality**, then **Save & restart receiver**. Your selected resolution and FPS remain the saved maximum. While video is arriving, sustained receiver delay above 150 ms or jitter above 40 ms for eight seconds triggers a lower request: 60 → 30 fps, then one resolution step at a time down to 720p, then 15 fps. A lower maximum such as 480p is retained. Startup has a 20-second grace period; further adjustments have at least a 60-second cooldown. Missing telemetry and static screens do not trigger adaptation.
+Select **Best latency**, enable **Adaptive quality**, then **Save & restart receiver**. Your selected resolution and FPS remain the saved maximum. While video is arriving, sustained receiver delay above 150 ms or jitter above 40 ms for eight seconds triggers a lower request: 60 → 30 fps, then one resolution step at a time down to 720p, then 15 fps. A lower maximum such as 480p is retained. Startup has a 20-second grace period; further adjustments have at least a 60-second cooldown. Missing telemetry and static screens do not trigger adaptation. Best picture does not expose the required native timing data, so adaptive mode is disabled for that preference.
 
 **Each adjustment restarts the receiver and may disconnect mirroring. Reconnect from Control Center → Screen Mirroring when prompted.** Quality stays reduced for that receiver session; manually Stop/Start to retry your saved maximum. It does not automatically raise quality and interrupt a stable stream. Disable the option to keep manual quality control.
 
