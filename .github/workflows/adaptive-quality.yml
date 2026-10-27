@@ -1,0 +1,20 @@
+name: Adaptive quality
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build WPF app and test adaptation policy
+        shell: powershell
+        run: |
+          .\source\build.ps1
+          $compiler = "$env:WINDIR\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
+          & $compiler /nologo /r:AirGlass.exe /r:System.Runtime.Serialization.dll /out:adaptive-tests.exe .\source\adaptive_quality_test.cs
+          if ($LASTEXITCODE) { throw 'Test compilation failed.' }
+          .\adaptive-tests.exe
+          if ($LASTEXITCODE) { throw 'Adaptive tests failed.' }
