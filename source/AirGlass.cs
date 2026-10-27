@@ -37,6 +37,8 @@ namespace AirGlass {
   [DataMember] public bool Software = false;
   [DataMember] public string OptimizeFor = "Latency";
   [DataMember] public bool SmoothLatency = true;
+  [DataMember] public bool Adaptive = false;
+  public Settings Copy() { return (Settings)MemberwiseClone(); }
   [DataMember] public string DecoderMode = "Direct3D11";
   [OnDeserializing] void InitializeNewSettings(StreamingContext context) { OptimizeFor = "Latency"; SmoothLatency = true; DecoderMode = null; }
   [OnDeserialized] void MigrateDecoder(StreamingContext context) { if (DecoderMode == null) DecoderMode = Software ? "Software" : "Auto"; }
@@ -248,6 +250,8 @@ namespace AirGlass {
   string failure = "";
   bool ready, closing, advertised;
   int discoveryRecoveries;
+  Settings activeProfile; AdaptiveQuality adaptive; bool adaptivePending;
+  readonly Stopwatch adaptiveClock=Stopwatch.StartNew();
   internal Receiver TestReceiver { get { return receiver; } }
   public Controller(string root, string data) {
    receiver = new Receiver(root, data); settingsFile = Path.Combine(data, "settings.xml");
@@ -277,9 +281,12 @@ namespace AirGlass {
     if (!receiver.Running) return;
     if (line.StartsWith("AirGlass discovery: registered") && line.Contains("_airplay._tcp")) advertised=true;
     if (line.StartsWith("AirGlass decoder:")) Get<TextBlock>("MessageLabel").Text=line;
-    if (line.StartsWith("AirGlass metrics:")) Get<TextBlock>("MessageLabel").Text=Receiver.FormatMetrics(line);
+    if (line.StartsWith("AirGlass metrics:")) {
+     Get<TextBlock>("MessageLabel").Text=Receiver.FormatMetrics(line);
+     if(settings.Adaptive && adaptive!=null && adaptive.Observe(line,adaptiveClock.Elapsed.TotalSeconds)) adaptivePending=true;
+    }
     if (line.Contains("Begin streaming to GStreamer video pipeline")) { ready = true; State("Mirroring active", "Your screen is connected.", "Your iPhone display is in the video window. Alt + Enter toggles full screen.", "Receiving iPhone video.", true); }
-    if (line.Contains("End-Of-Stream") || line.Contains("lost connection with client")) { ready = false; State("Receiver running", "Ready for your iPhone.", "Choose the receiver below in Control Center → Screen Mirroring.", "Waiting for a new connection.", true); }
+    if (line.Contains("End-Of-Stream") || line.Contains("lost connection with client")) { adaptivePending=false; adaptive=new AdaptiveQuality(adaptiveClock.Elapsed.TotalSeconds); ready = false; State("Receiver running", "Ready for your iPhone.", "Choose the receiver below in Control Center → Screen Mirroring.", "Waiting for a new connection.", true); }
    })); };
    Window.Closed += delegate { closing = true; timer.Stop(); receiver.Dispose(); };
    timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) }; timer.Tick += delegate { Tick(); }; timer.Start();
@@ -296,15 +303,17 @@ namespace AirGlass {
    Get<ComboBox>("DecoderInput").SelectedIndex = Array.IndexOf(new string[] {"Auto","Nvidia","Direct3D11","Software"}, s.DecoderChoice);
    Get<ComboBox>("PreferenceInput").SelectedIndex = s.OptimizeFor == "Picture" ? 1 : 0;
    Get<CheckBox>("SmoothInput").IsChecked = s.SmoothLatency;
+   Get<CheckBox>("AdaptiveInput").IsChecked = s.Adaptive;
    UpdatePreferenceHint();
   }
   Settings ReadControls() {
    string decoder = (string)((ComboBoxItem)Get<ComboBox>("DecoderInput").SelectedItem).Tag;
-   return new Settings { Name = Get<TextBox>("NameInput").Text.Trim(), Resolution = (string)((ComboBoxItem)Get<ComboBox>("ResolutionInput").SelectedItem).Tag, Fps = Int32.Parse((string)((ComboBoxItem)Get<ComboBox>("FpsInput").SelectedItem).Tag), Audio = Get<CheckBox>("AudioInput").IsChecked == true, Fullscreen = Get<CheckBox>("FullscreenInput").IsChecked == true, Software = decoder == "Software", DecoderMode = decoder, OptimizeFor = (string)((ComboBoxItem)Get<ComboBox>("PreferenceInput").SelectedItem).Tag, SmoothLatency = Get<CheckBox>("SmoothInput").IsChecked == true };
+   return new Settings { Name = Get<TextBox>("NameInput").Text.Trim(), Resolution = (string)((ComboBoxItem)Get<ComboBox>("ResolutionInput").SelectedItem).Tag, Fps = Int32.Parse((string)((ComboBoxItem)Get<ComboBox>("FpsInput").SelectedItem).Tag), Audio = Get<CheckBox>("AudioInput").IsChecked == true, Fullscreen = Get<CheckBox>("FullscreenInput").IsChecked == true, Software = decoder == "Software", DecoderMode = decoder, OptimizeFor = (string)((ComboBoxItem)Get<ComboBox>("PreferenceInput").SelectedItem).Tag, SmoothLatency = Get<CheckBox>("SmoothInput").IsChecked == true, Adaptive = Get<CheckBox>("AdaptiveInput").IsChecked == true && Get<ComboBox>("PreferenceInput").SelectedIndex != 1 };
   }
   void UpdatePreferenceHint() {
    bool picture = Get<ComboBox>("PreferenceInput").SelectedIndex == 1;
    Get<CheckBox>("SmoothInput").IsEnabled = !picture;
+   Get<CheckBox>("AdaptiveInput").IsEnabled = !picture;
    int fps = new int[] {15,30,60}[Math.Max(0, Get<ComboBox>("FpsInput").SelectedIndex)];
      Get<CheckBox>("SmoothInput").ToolTip = "Adapts to recent timing variation, starting near 8 ms and capped at " + Math.Round(1000.0/fps) + " ms. Sheds temporary waiting at 4 ms per second. Turn off for immediate display.";
    Get<TextBlock>("PreferenceHint").Text = Get<ComboBox>("PreferenceInput").SelectedIndex == 1
@@ -330,21 +339,41 @@ namespace AirGlass {
    if(!recovery)discoveryRecoveries=0;
    try {
     settings = ReadControls(); settings.Validate(); settings.Save(settingsFile); UpdateProfile();
-    failure = ""; ready = false; advertised = false; receiver.Start(settings);
+    activeProfile=settings.Copy(); adaptive=new AdaptiveQuality(adaptiveClock.Elapsed.TotalSeconds);adaptivePending=false;
+    failure = ""; ready = false; advertised = false; receiver.Start(activeProfile);
     State("Starting…", "Preparing your receiver…", "Loading audio and video. First launch may take a little longer.", "Preparing AirPlay discovery…", false);
    } catch (Exception ex) { State("Needs attention", "Let's get connected.", ex.Message, "Open Connection help for setup and diagnostics.", false); }
   }
-  public void Stop() { receiver.Stop(); ready = false; State("Receiver off", "Make room for your screen.", "Start the receiver, then connect from your iPhone.", "Receiver stopped.", false); }
+  public void Stop() { adaptivePending=false;adaptive=null; receiver.Stop(); ready = false; State("Receiver off", "Make room for your screen.", "Start the receiver, then connect from your iPhone.", "Receiver stopped.", false); }
   public void Apply() {
    try {
     var updated = ReadControls(); updated.Validate(); updated.Save(settingsFile);
-    bool unchanged= settings.Name==updated.Name && settings.Resolution==updated.Resolution && settings.Fps==updated.Fps && settings.Audio==updated.Audio && settings.Fullscreen==updated.Fullscreen && settings.DecoderChoice==updated.DecoderChoice && settings.OptimizeFor==updated.OptimizeFor && settings.SmoothLatency==updated.SmoothLatency;
+    bool unchanged= settings.Name==updated.Name && settings.Resolution==updated.Resolution && settings.Fps==updated.Fps && settings.Audio==updated.Audio && settings.Fullscreen==updated.Fullscreen && settings.DecoderChoice==updated.DecoderChoice && settings.OptimizeFor==updated.OptimizeFor && settings.SmoothLatency==updated.SmoothLatency && settings.Adaptive==updated.Adaptive;
     bool restart = receiver.Running && !unchanged; settings = updated; UpdateProfile();
     if (restart) { Stop(); Start(); }
     Get<TextBlock>("SettingsFeedback").Text = restart ? "Saved. Reconnect Screen Mirroring on your iPhone." : "Settings saved for your next connection.";
    } catch (Exception ex) { Get<TextBlock>("SettingsFeedback").Text = ex.Message; }
   }
+  void AdaptQuality() {
+   adaptivePending=false;
+   if(!settings.Adaptive || activeProfile==null || !receiver.Running)return;
+   int index=Array.IndexOf(Settings.Resolutions,activeProfile.Resolution), fps=activeProfile.Fps;
+   if(!AdaptiveQuality.Lower(ref index,ref fps))return;
+   activeProfile.Resolution=Settings.Resolutions[index];activeProfile.Fps=fps;
+   // Keep saved preferences and unsaved controls intact; only this session changes.
+   receiver.Stop(); ready=false;advertised=false;
+   try {
+    receiver.Start(activeProfile);
+    State("Adapting quality", "Reconnect your iPhone", "Adaptive quality lowered the receiver request. Reconnect in Control Center → Screen Mirroring.", "Waiting for your iPhone to reconnect.", false);
+    Get<TextBlock>("ProfileSummary").Text=activeProfile.Resolution.Split('x')[1]+"p / "+fps+" fps · adaptive";
+    Get<TextBlock>("SettingsFeedback").Text="Adaptive quality: reconnect at "+activeProfile.Resolution.Split('x')[1]+"p / "+fps+" fps. Saved maximum is unchanged.";
+   } catch(Exception ex) {
+    adaptive=null;
+    State("Needs attention", "Adaptive restart failed", ex.Message, "Start the receiver to retry with your saved settings.", false);
+   }
+  }
   void Tick() {
+   if(adaptivePending)AdaptQuality();
    if (receiver.Process == null) return;
    if (!receiver.Running) {
     int exit = receiver.Process.ExitCode; receiver.Stop();

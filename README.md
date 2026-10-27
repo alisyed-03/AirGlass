@@ -53,6 +53,14 @@ The main panel contains Receiver name, Resolution, Maximum frame rate and Perfor
 
 Use **Save & restart receiver** after making changes, then reconnect from the iPhone. Normal Stop/restart withdraws the Bonjour services, waits for the local removal event, keeps the same available port block and allows a one-second quiet interval before replacement; forced termination is reserved for an unresponsive process. “Ready” waits for the registration callback, a local Bonjour browse result and the TCP listener. Saving unchanged settings keeps the active receiver running. Unconfirmed discovery receives one bounded automatic retry.
 
+## Adaptive quality (source build)
+
+Select **Best latency**, enable **Adaptive quality**, then **Save & restart receiver**. Your selected resolution and FPS remain the saved maximum. While video is arriving, sustained receiver delay above 150 ms or jitter above 40 ms for eight seconds triggers a lower request: 60 → 30 fps, then one resolution step at a time down to 720p, then 15 fps. A lower maximum such as 480p is retained. Startup has a 20-second grace period; further adjustments have at least a 60-second cooldown. Missing telemetry and static screens do not trigger adaptation. Best picture does not expose the required native timing data, so adaptive mode is disabled for that preference.
+
+**Each adjustment restarts the receiver and may disconnect mirroring. Reconnect from Control Center → Screen Mirroring when prompted.** Quality stays reduced for that receiver session; manually Stop/Start to retry your saved maximum. It does not automatically raise quality and interrupt a stable stream. Disable the option to keep manual quality control.
+
+This uses local receiver delay and jitter as feedback, not an internet speed test. PC decoding load can also trigger it, and it cannot detect every Wi-Fi problem. Resolution/FPS are requests to the iPhone, not guaranteed output. The feature is available in source builds and is not included in the published v2.7.2 downloads yet.
+
 ## Automatic GPU decoding
 
 New profiles default to **Video decoder → Direct3D11 hardware**, with CPU fallback if the required codec is unavailable. NVIDIA NVDEC is now opt-in: its plugin is stored outside the normal scan folder and is loaded only for NVIDIA or Automatic mode. **Automatic · detect hardware** remains available for the broader fallback order below. AirGlass checks H.264 and HEVC independently on each receiver start, using the installed driver and codec factories rather than a graphics-card name alone.
