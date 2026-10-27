@@ -44,7 +44,7 @@ jobs:
           "PAYLOAD=$payload" >> $env:GITHUB_ENV
           & "$payload\source\build.ps1"
           if (!(Test-Path "$payload\engine\lib\gstreamer-1.0\libgstlibav.dll")) { throw 'Incomplete media runtime.' }
-          if ((Get-Item "$payload\AirGlass.exe").VersionInfo.FileVersion -ne '2.7.2.0') { throw 'Incorrect application version.' }
+          if ((Get-Item "$payload\AirGlass.exe").VersionInfo.FileVersion -ne '2.7.3.0') { throw 'Incorrect application version.' }
       - name: Verify publisher and test startup recovery
         shell: powershell
         run: |
@@ -67,7 +67,7 @@ jobs:
       - name: Verify silent installation and uninstall
         shell: powershell
         run: |
-          $installer = Join-Path $env:RUNNER_TEMP 'AirGlass-Setup-2.7.2.exe'
+          $installer = Join-Path $env:RUNNER_TEMP 'AirGlass-Setup-2.7.3.exe'
           $target = Join-Path $env:RUNNER_TEMP 'Install QA spaced folder'
           $process = Start-Process $installer -ArgumentList @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', ('/DIR="' + $target + '"')) -PassThru -Wait
           if ($process.ExitCode -ne 0) { throw "Installer failed: $($process.ExitCode)" }
@@ -81,7 +81,7 @@ jobs:
         run: |
           $out = Join-Path $env:RUNNER_TEMP 'downloads'
           New-Item $out -ItemType Directory | Out-Null
-          Copy-Item "$env:RUNNER_TEMP\AirGlass-Setup-2.7.2.exe" $out
+          Copy-Item "$env:RUNNER_TEMP\AirGlass-Setup-2.7.3.exe" $out
           Compress-Archive -Path "$env:PAYLOAD\*" -DestinationPath "$out\AirGlass-Windows-portable.zip" -CompressionLevel Optimal
           foreach ($file in (Get-ChildItem $out -File)) {
             $hash = (Get-FileHash $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
@@ -90,5 +90,5 @@ jobs:
           "DOWNLOADS=$out" >> $env:GITHUB_ENV
       - uses: actions/upload-artifact@v4
         with:
-          name: AirGlass-2.7.2-downloads
+          name: AirGlass-2.7.3-downloads
           path: ${{ env.DOWNLOADS }}/*
